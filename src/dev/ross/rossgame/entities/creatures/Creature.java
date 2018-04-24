@@ -3,6 +3,7 @@ package dev.ross.rossgame.entities.creatures;
 import dev.ross.rossgame.Game;
 import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.entities.Entity;
+import dev.ross.rossgame.tiles.Tile;
 
 public abstract class Creature extends Entity {
 	
@@ -28,8 +29,63 @@ public abstract class Creature extends Entity {
 	
 	
 	public void move() {
-		x += xMove;
-		y += yMove;
+		moveX();
+		moveY();
+	}
+	
+	
+	//Check bounding box for collision
+	public void moveX() {
+		
+		//moving right
+		if(xMove > 0) { 
+			int tempX = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
+			
+			//checks right of bound box
+			if(!collisionWithTile(tempX, (int) (y+bounds.y) / Tile.TILEHEIGHT ) &&
+					!collisionWithTile(tempX, (int) (y+bounds.y+bounds.height) / Tile.TILEHEIGHT )) {
+				x += xMove;
+			}
+		}
+		
+		//moving left
+		else if (xMove < 0) {
+			int tempX = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
+			
+			//checks left of bound box
+			if(!collisionWithTile(tempX, (int) (y+bounds.y) / Tile.TILEHEIGHT ) &&
+					!collisionWithTile(tempX, (int) (y+bounds.y+bounds.height) / Tile.TILEHEIGHT )) {
+				x += xMove;
+			}
+		}
+		
+	}
+	
+	public void moveY() {
+		
+		//going up
+		if(yMove < 0) {
+			int tempY = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
+			
+			if(!collisionWithTile((int) (x+bounds.x) / Tile.TILEWIDTH, tempY) &&
+					!collisionWithTile((int) (x+bounds.x+bounds.width) / Tile.TILEWIDTH, tempY)	) {
+				y += yMove;
+			}
+		}
+		
+		//going down
+		else if(yMove > 0) {
+			int tempY = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
+			
+			if(!collisionWithTile((int) (x+bounds.x) / Tile.TILEWIDTH, tempY) &&
+					!collisionWithTile((int) (x+bounds.x+bounds.width) / Tile.TILEWIDTH, tempY)	) {
+				y += yMove;
+			}
+		}
+	}
+	
+	protected boolean collisionWithTile(int x, int y) {
+		return handler.getWorld().getTile(x, y).isSolid();
 	}
 	
 	
