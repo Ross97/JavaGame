@@ -22,12 +22,17 @@ public class World {
 		
 	}
 	
-	//render each tile
+	//render each tile that is on screen
 	public void render(Graphics g) {
 		
-		for(int y = 0; y < height; y++) {
-			
-			for(int x = 0; x < width; x++){
+		//what tiles users can see
+		int xStart = (int) Math.max(0, game.getCamera().getxOffset() / Tile.TILEWIDTH); //returns bigger num		
+		int xEnd = (int) Math.min(width, (game.getCamera().getxOffset() + game.getWidth()) / Tile.TILEWIDTH + 1);
+		int yStart = (int) Math.max(0, game.getCamera().getyOffset() / Tile.TILEHEIGHT); //returns bigger num		
+		int yEnd = (int) Math.min(width, (game.getCamera().getyOffset() + game.getHeight()) / Tile.TILEHEIGHT + 1);
+		
+		for(int y = yStart; y < yEnd; y++) {
+			for(int x = xStart; x < xEnd; x++){
 				getTile(x,y).render(g, 
 						(int) (x*Tile.TILEWIDTH - game.getCamera().getxOffset()), 
 						(int) (y*Tile.TILEHEIGHT - game.getCamera().getyOffset()) );
