@@ -16,7 +16,6 @@ public class MenuState extends State {
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(Assets.dirt, 0, 0, null);
 	}
 
 }

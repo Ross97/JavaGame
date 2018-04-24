@@ -56,8 +56,10 @@ public class Game implements Runnable {
 		display.getFrame().addKeyListener(keyManager); //get JFrame and add key listener
 		Assets.init();
 		
-		camera = new Camera(this, 0,0);
+		
 		handler = new Handler(this);
+		camera = new Camera(handler, 0,0);
+		
 		
 		gameState = new GameState(handler);
 		menuState = new MenuState(handler);
@@ -123,12 +125,13 @@ public class Game implements Runnable {
 				delta--;
 			}
 			
-			//fps counter
+			/* FPS COUNTER
 			if(timer >= 1000000000) {
 				System.out.println("FPS: " + ticks);
 				ticks = 0;
 				timer = 0;
 			}
+			*/
 		}
 	
 		stop();

@@ -45,6 +45,8 @@ public abstract class Creature extends Entity {
 			if(!collisionWithTile(tempX, (int) (y+bounds.y) / Tile.TILEHEIGHT ) &&
 					!collisionWithTile(tempX, (int) (y+bounds.y+bounds.height) / Tile.TILEHEIGHT )) {
 				x += xMove;
+			}else {
+				x = tempX * Tile.TILEWIDTH - bounds.x - bounds.width - 1; //get pixel co-ords (1 prevents bug)
 			}
 		}
 		
@@ -56,6 +58,8 @@ public abstract class Creature extends Entity {
 			if(!collisionWithTile(tempX, (int) (y+bounds.y) / Tile.TILEHEIGHT ) &&
 					!collisionWithTile(tempX, (int) (y+bounds.y+bounds.height) / Tile.TILEHEIGHT )) {
 				x += xMove;
+			}else {
+				x = tempX * Tile.TILEWIDTH + Tile.TILEWIDTH - bounds.x ; //get pixel co-ords 
 			}
 		}
 		
@@ -70,6 +74,8 @@ public abstract class Creature extends Entity {
 			if(!collisionWithTile((int) (x+bounds.x) / Tile.TILEWIDTH, tempY) &&
 					!collisionWithTile((int) (x+bounds.x+bounds.width) / Tile.TILEWIDTH, tempY)	) {
 				y += yMove;
+			}else {
+				y = tempY * Tile.TILEHEIGHT + Tile.TILEHEIGHT - bounds.y; //for better collision
 			}
 		}
 		
@@ -80,6 +86,8 @@ public abstract class Creature extends Entity {
 			if(!collisionWithTile((int) (x+bounds.x) / Tile.TILEWIDTH, tempY) &&
 					!collisionWithTile((int) (x+bounds.x+bounds.width) / Tile.TILEWIDTH, tempY)	) {
 				y += yMove;
+			}else {
+				y = tempY * Tile.TILEHEIGHT - bounds.height - bounds.y -1; //for better collision
 			}
 		}
 	}
