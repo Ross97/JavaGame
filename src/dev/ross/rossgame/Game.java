@@ -4,6 +4,7 @@ import java.awt.image.BufferStrategy;
 
 import dev.ross.rossgame.display.Display;
 import dev.ross.rossgame.gfx.Assets;
+import dev.ross.rossgame.gfx.Camera;
 import dev.ross.rossgame.input.KeyManager;
 import dev.ross.rossgame.states.GameState;
 import dev.ross.rossgame.states.MenuState;
@@ -14,7 +15,7 @@ public class Game implements Runnable {
 	
 	//create display object
 	private Display display;
-	public int width, height;
+	private int width, height;
 	public String title;
 	
 	private boolean running = false;
@@ -34,6 +35,10 @@ public class Game implements Runnable {
 	//Input
 	private KeyManager keyManager;
 	
+	//Camera
+	private Camera camera;
+	
+	
 	//constructor
 	public Game(String title, int width, int height) {
 		this.width = width;
@@ -46,6 +51,8 @@ public class Game implements Runnable {
 		display = new Display(title,width,height);
 		display.getFrame().addKeyListener(keyManager); //get JFrame and add key listener
 		Assets.init();
+		
+		camera = new Camera(this, 0,0);
 		
 		gameState = new GameState(this);
 		menuState = new MenuState(this);
@@ -126,6 +133,16 @@ public class Game implements Runnable {
 		return keyManager;
 	}
 	
+	public Camera getCamera() {
+		return camera;
+	}
+	
+	public int getWidth() {
+		return width;
+	}
+	public int getHeight() {
+		return height;
+	}
 	
 	public synchronized void start() {
 		if(running)
