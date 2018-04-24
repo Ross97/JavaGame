@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class Tile {
-	//Static
+	//Create an instance of each tile, and give them separate IDs
 	public static Tile[] tiles = new Tile[256];
 	public static Tile grassTile = new GrassTile(0); //set object to grass class
 	public static Tile dirtTile = new DirtTile(1);
