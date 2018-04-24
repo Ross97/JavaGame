@@ -3,15 +3,16 @@ package dev.ross.rossgame.entities;
 import java.awt.Graphics;
 
 import dev.ross.rossgame.Game;
+import dev.ross.rossgame.Handler;
 
 public abstract class Entity {
 	//protected = private but extended classes have access
-	protected Game game;
+	protected Handler handler;
 	protected float x, y;
 	protected int width, height;
 	
-	public Entity(Game game, float x, float y, int width, int height) {
-		this.game = game;
+	public Entity(Handler handler, float x, float y, int width, int height) {
+		this.handler = handler;
 		this.x = x;
 		this.y = y;
 		this.width = width;

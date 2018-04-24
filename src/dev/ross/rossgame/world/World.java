@@ -3,18 +3,19 @@ package dev.ross.rossgame.world;
 import java.awt.Graphics;
 
 import dev.ross.rossgame.Game;
+import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.tiles.Tile;
 import dev.ross.rossgame.utils.Utils;
 
 public class World {
-	private Game game;
+	private Handler handler;
 	private int width, height; //how big the world is
 	private int spawnX, spawnY;
 	private int[][] tiles; //store tile IDs and XY in here
 	
 	//load world file
-	public World(Game game, String path) {
-		this.game = game;
+	public World(Handler handler, String path) {
+		this.handler = handler;
 		loadWorld(path);
 	}
 	
@@ -26,16 +27,16 @@ public class World {
 	public void render(Graphics g) {
 		
 		//what tiles users can see
-		int xStart = (int) Math.max(0, game.getCamera().getxOffset() / Tile.TILEWIDTH); //returns bigger num		
-		int xEnd = (int) Math.min(width, (game.getCamera().getxOffset() + game.getWidth()) / Tile.TILEWIDTH + 1);
-		int yStart = (int) Math.max(0, game.getCamera().getyOffset() / Tile.TILEHEIGHT); //returns bigger num		
-		int yEnd = (int) Math.min(width, (game.getCamera().getyOffset() + game.getHeight()) / Tile.TILEHEIGHT + 1);
+		int xStart = (int) Math.max(0, handler.getCamera().getxOffset() / Tile.TILEWIDTH); //returns bigger num		
+		int xEnd = (int) Math.min(width, (handler.getCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);
+		int yStart = (int) Math.max(0, handler.getCamera().getyOffset() / Tile.TILEHEIGHT); //returns bigger num		
+		int yEnd = (int) Math.min(width, (handler.getCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
 		
 		for(int y = yStart; y < yEnd; y++) {
 			for(int x = xStart; x < xEnd; x++){
 				getTile(x,y).render(g, 
-						(int) (x*Tile.TILEWIDTH - game.getCamera().getxOffset()), 
-						(int) (y*Tile.TILEHEIGHT - game.getCamera().getyOffset()) );
+						(int) (x*Tile.TILEWIDTH - handler.getCamera().getxOffset()), 
+						(int) (y*Tile.TILEHEIGHT - handler.getCamera().getyOffset()) );
 			}
 			
 		} 

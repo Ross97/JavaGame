@@ -3,6 +3,7 @@ package dev.ross.rossgame.states;
 import java.awt.Graphics;
 
 import dev.ross.rossgame.Game;
+import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.entities.creatures.Player;
 import dev.ross.rossgame.tiles.Tile;
 import dev.ross.rossgame.world.World;
@@ -13,10 +14,12 @@ public class GameState extends State {
 	private World world;
 	
 	//constructor
-	public GameState(Game game) {
-		super(game);
-		player = new Player(game,100,100);
-		world = new World(game, "res/worlds/world1.txt");
+	public GameState(Handler handler) {
+		super(handler);
+		world = new World(handler, "res/worlds/world1.txt");
+		handler.setWorld(world);
+		player = new Player(handler,100,100);
+		
 	}
 	
 	public void tick() {

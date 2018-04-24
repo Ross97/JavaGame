@@ -1,6 +1,7 @@
 package dev.ross.rossgame.entities.creatures;
 
 import dev.ross.rossgame.Game;
+import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.entities.Entity;
 
 public abstract class Creature extends Entity {
@@ -13,8 +14,8 @@ public abstract class Creature extends Entity {
 	protected float speed;
 	protected float xMove, yMove;
 	
-	public Creature(Game game, float x, float y, int width, int height) {
-		super(game, x, y, width, height); //super passes to Entity
+	public Creature(Handler handler, float x, float y, int width, int height) {
+		super(handler, x, y, width, height); //super passes to Entity
 		health = DEFAULT_HEALTH;
 		speed = DEFAULT_SPEED;
 		xMove = 0;
