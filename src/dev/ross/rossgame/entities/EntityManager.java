@@ -2,6 +2,7 @@ package dev.ross.rossgame.entities;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.entities.creatures.Player;
@@ -10,6 +11,20 @@ public class EntityManager {
 	private Handler handler;
 	private Player player;
 	private ArrayList<Entity> entities; //arrayList allows adding or removing without trouble
+	
+	
+	//Comparator class
+	private Comparator<Entity> renderSorter = new Comparator<Entity>() {
+
+		//compares two entities to decide which to render on top
+		@Override
+		public int compare(Entity a, Entity b) {
+			if(a.getY() + a.getHeight() < b.getY() + b.getHeight())
+				return -1; 
+			return 1;
+		}
+		
+	};
 	
 	public EntityManager(Handler handler, Player player) {
 		this.handler = handler;
@@ -23,6 +38,7 @@ public class EntityManager {
 			Entity e = entities.get(i); //Entity e = entities[i]
 			e.tick();
 		}
+		entities.sort(renderSorter);
 	}
 	
 	public void render(Graphics g) {
