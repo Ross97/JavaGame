@@ -28,9 +28,15 @@ public abstract class Creature extends Entity {
 	}
 	
 	
+	//Moves the creature, checks where it will be moving (place bounds there)
 	public void move() {
-		moveX();
-		moveY();
+		
+		
+		if(!checkEntityCollisions(xMove, 0))
+			moveX();
+		
+		if(!checkEntityCollisions(yMove, 0))
+			moveY();
 	}
 	
 	
