@@ -4,6 +4,8 @@ import java.awt.Graphics;
 
 import dev.ross.rossgame.Game;
 import dev.ross.rossgame.Handler;
+import dev.ross.rossgame.entities.EntityManager;
+import dev.ross.rossgame.entities.creatures.Player;
 import dev.ross.rossgame.tiles.Tile;
 import dev.ross.rossgame.utils.Utils;
 
@@ -13,14 +15,25 @@ public class World {
 	private int spawnX, spawnY;
 	private int[][] tiles; //store tile IDs and XY in here
 	
+	
+	//Entities
+	private EntityManager entityManager;
+	
+	
+	
 	//load world file
 	public World(Handler handler, String path) {
 		this.handler = handler;
+		entityManager = new EntityManager(handler, new Player(handler, 100, 100));
+		
 		loadWorld(path);
+		
+		entityManager.getPlayer().setX(spawnX);
+		entityManager.getPlayer().setY(spawnY);
 	}
 	
 	public void tick() {
-		
+		entityManager.tick();
 	}
 	
 	//render each tile that is on screen
@@ -40,6 +53,8 @@ public class World {
 			}
 			
 		} 
+		//Render entities
+		entityManager.render(g);
 	}
 	
 	
