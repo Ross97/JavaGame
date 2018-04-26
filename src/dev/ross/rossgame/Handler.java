@@ -2,6 +2,7 @@ package dev.ross.rossgame;
 
 import dev.ross.rossgame.gfx.Camera;
 import dev.ross.rossgame.input.KeyManager;
+import dev.ross.rossgame.input.MouseManager;
 import dev.ross.rossgame.world.World;
 
 public class Handler {
@@ -30,7 +31,9 @@ public class Handler {
 		return game.getHeight();
 	}
 	
-	
+	public MouseManager getMouseManager() {
+		return game.getMouseManager();
+	}
 	
 	//setters & getters 
 	public Game getGame() {

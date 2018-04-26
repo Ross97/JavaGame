@@ -6,6 +6,7 @@ import dev.ross.rossgame.display.Display;
 import dev.ross.rossgame.gfx.Assets;
 import dev.ross.rossgame.gfx.Camera;
 import dev.ross.rossgame.input.KeyManager;
+import dev.ross.rossgame.input.MouseManager;
 import dev.ross.rossgame.states.GameState;
 import dev.ross.rossgame.states.MenuState;
 import dev.ross.rossgame.states.State;
@@ -28,12 +29,13 @@ public class Game implements Runnable {
 	private Graphics g;
 	
 	//States
-	private State gameState;
-	private State menuState;
+	public State gameState;
+	public State menuState;
 	
 	
 	//Input
 	private KeyManager keyManager;
+	private MouseManager mouseManager;
 	
 	//Camera
 	private Camera camera;
@@ -48,12 +50,17 @@ public class Game implements Runnable {
 		this.width = width;
 		this.height = height;
 		this.title = title;
+		
 		keyManager = new KeyManager();
+		mouseManager = new MouseManager();
 	}
 	
 	public void init() {
 		display = new Display(title,width,height);
 		display.getFrame().addKeyListener(keyManager); //get JFrame and add key listener
+		display.getCanvas().addMouseListener(mouseManager);
+		display.getCanvas().addMouseMotionListener(mouseManager);
+		
 		Assets.init();
 		
 		
@@ -63,7 +70,7 @@ public class Game implements Runnable {
 		
 		gameState = new GameState(handler);
 		menuState = new MenuState(handler);
-		State.setState(gameState);
+		State.setState(menuState);
 
 	}
 
@@ -108,30 +115,20 @@ public class Game implements Runnable {
 		double delta = 0;
 		long now; //current time
 		long lastTime = System.nanoTime(); //returns time of pc 
-		long timer = 0; //times until 1 second
-		int ticks = 0; //for FPS counter
 		
 		while(running) {
 			now = System.nanoTime();
 			delta += (now - lastTime) / timePerTick;
-			timer += now - lastTime;
 			lastTime = now;
 			
 			
 			if(delta >= 1) {
 				tick();
 				render();
-				ticks++;
 				delta--;
 			}
 			
-			/* FPS COUNTER
-			if(timer >= 1000000000) {
-				System.out.println("FPS: " + ticks);
-				ticks = 0;
-				timer = 0;
-			}
-			*/
+
 		}
 	
 		stop();
@@ -139,6 +136,10 @@ public class Game implements Runnable {
 	
 	public KeyManager getKeyManager() {
 		return keyManager;
+	}
+	
+	public MouseManager getMouseManager() {
+		return mouseManager;
 	}
 	
 	public Camera getCamera() {
