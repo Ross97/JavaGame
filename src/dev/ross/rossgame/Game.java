@@ -57,31 +57,33 @@ public class Game implements Runnable {
 	
 	public void init() {
 		display = new Display(title,width,height);
+		
 		display.getFrame().addKeyListener(keyManager); //get JFrame and add key listener
+		display.getFrame().addMouseListener(mouseManager);
+		display.getFrame().addMouseMotionListener(mouseManager);
 		display.getCanvas().addMouseListener(mouseManager);
 		display.getCanvas().addMouseMotionListener(mouseManager);
-		
+
 		Assets.init();
-		
 		
 		handler = new Handler(this);
 		camera = new Camera(handler, 0,0);
 		
-		
 		gameState = new GameState(handler);
 		menuState = new MenuState(handler);
 		State.setState(menuState);
-
 	}
 
 	
-	//should run 60 times per second
-	private void tick() { //update
-		
+
+	private void tick() { 
 		keyManager.tick();
+		
 		if(State.getState() != null)
 			State.getState().tick();
 	}
+	
+	
 	private void render() {
 		bs = display.getCanvas().getBufferStrategy();
 		if(bs==null) {
@@ -98,19 +100,15 @@ public class Game implements Runnable {
 		if(State.getState() != null)
 			State.getState().render(g);
 		
-
-		
 		//Stop drawing
 		bs.show();
 		g.dispose();
 	}
 	
 	public void run() {
-		//for threading
-		init();
+		init(); //for threading
 		
 		int fps = 60;
-		
 		double timePerTick = 1000000000/fps; //1sec/fps, max time to run tick/render
 		double delta = 0;
 		long now; //current time
@@ -134,6 +132,30 @@ public class Game implements Runnable {
 		stop();
 	}
 	
+	//Threading
+	public synchronized void start() {
+		if(running)
+			return;
+		running = true;
+		thread = new Thread(this); //pass game class into thread
+		thread.start(); //calls run()
+	}
+	
+	public synchronized void stop() {
+		if(!running)
+			return;
+		running = false;
+		
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	//getters/setters
+	
 	public KeyManager getKeyManager() {
 		return keyManager;
 	}
@@ -153,26 +175,6 @@ public class Game implements Runnable {
 		return height;
 	}
 	
-	public synchronized void start() {
-		if(running)
-			return;
-		running = true;
-		//pass game class into thread
-		thread = new Thread(this);
-		thread.start(); //calls run()
-	}
-	
-	public synchronized void stop() {
-		if(!running)
-			return;
-		running = false;
-		
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-	}
+
 
 }

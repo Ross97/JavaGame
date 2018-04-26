@@ -6,7 +6,7 @@ public class Assets {
 	//load in all assets
 	
 	//create bufferedImages
-	public static BufferedImage player, dirt, grass, stone, tree;
+	public static BufferedImage player, dirt, grass, stone, tree, button;
 	
 	private static final int w = 32, h = 32; 
 	
@@ -18,5 +18,6 @@ public class Assets {
 		grass = sheet.crop(w*2, 0, w, h);
 		stone = sheet.crop(w*3, 0, w, h);
 		tree = sheet.crop(0, h, w, h);
+		button = sheet.crop(0, 0, w, h);
 	}
 }
