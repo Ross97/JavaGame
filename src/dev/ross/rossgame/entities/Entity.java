@@ -18,7 +18,6 @@ public abstract class Entity {
 	protected int health;
 	protected boolean active = true;
 	
-	
 
 	public Entity(Handler handler, float x, float y, int width, int height) {
 		this.handler = handler;

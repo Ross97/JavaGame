@@ -6,6 +6,7 @@ import dev.ross.rossgame.Game;
 import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.entities.EntityManager;
 import dev.ross.rossgame.entities.Tree;
+import dev.ross.rossgame.entities.creatures.Enemy;
 import dev.ross.rossgame.entities.creatures.Player;
 import dev.ross.rossgame.tiles.Tile;
 import dev.ross.rossgame.utils.Utils;
@@ -25,10 +26,12 @@ public class World {
 		this.handler = handler;
 		entityManager = new EntityManager(handler, new Player(handler, 100, 100));
 		
-		if(path=="res/worlds/world1.txt")
-		{
-		 for(int i= 0; i < 5; i ++)
-		 	entityManager.addEntity(new Tree(handler, i*300, i*100));
+		//if passed menu
+		if(path=="res/worlds/world1.txt") {
+			 for(int i=0; i < 5; i ++)
+			 	entityManager.addEntity(new Tree(handler, i*300, i*100));
+			
+			entityManager.addEntity(new Enemy(handler, 300, 300, 100, 100));
 		}
 			
 		

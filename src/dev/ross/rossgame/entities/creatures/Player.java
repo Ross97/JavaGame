@@ -74,9 +74,7 @@ public class Player extends Creature {
 			playerAngry = false;
 			return;
 		}
-			
-		
-		attackTimer = 0;
+		attackTimer = 0;	
 		
 		//attacking
 		for(Entity e : handler.getWorld().getEntityManager().getEntities()){
@@ -87,12 +85,10 @@ public class Player extends Creature {
 				e.hurt(1);
 				playerAngry = true;
 			}
-			
 		}
-		
-		
+
 	}
-	private EntityManager entityManager;
+
 	public void die() {
 		System.out.println("You died!");
 	}
@@ -116,14 +112,8 @@ public class Player extends Creature {
 			g.drawImage(Assets.player, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null); //x and y from Entity class
 		else
 			g.drawImage(Assets.playerAngry, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null); //x and y from Entity class
-		
-		/*draw Collision box (settings above)
-		g.setColor(Color.blue);
-		g.fillRect(	(int) (x + bounds.x - handler.getCamera().getxOffset()),
-					(int) (y + bounds.y - handler.getCamera().getyOffset()),
-					bounds.width,
-					bounds.height);
-					*/
 	}
+	
+
 	
 }

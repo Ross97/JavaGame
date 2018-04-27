@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import dev.ross.rossgame.Handler;
+import dev.ross.rossgame.entities.creatures.Enemy;
 import dev.ross.rossgame.entities.creatures.Player;
 
 public class EntityManager {
 	private Handler handler;
 	private Player player;
+	private Enemy enemy;
 	private ArrayList<Entity> entities; //arrayList allows adding or removing without trouble
 	
 	
@@ -29,8 +31,10 @@ public class EntityManager {
 	public EntityManager(Handler handler, Player player) {
 		this.handler = handler;
 		this.player = player;
+
 		entities = new ArrayList<Entity>();
 		addEntity(player);
+
 	}
 	
 	public void tick() {
