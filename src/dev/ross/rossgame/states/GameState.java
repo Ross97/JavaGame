@@ -22,6 +22,8 @@ public class GameState extends State {
 	
 	public void tick() {
 		world.tick();
+		if(handler.getMouseManager().isRightPressed())			
+			State.setState(handler.getGame().menuState);
 	}
 
 	public void render(Graphics g) {

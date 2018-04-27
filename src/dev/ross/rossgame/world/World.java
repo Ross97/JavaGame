@@ -24,7 +24,13 @@ public class World {
 	public World(Handler handler, String path) {
 		this.handler = handler;
 		entityManager = new EntityManager(handler, new Player(handler, 100, 100));
-		entityManager.addEntity(new Tree(handler, 300, 100));
+		
+		if(path=="res/worlds/world1.txt")
+		{
+		 for(int i= 0; i < 5; i ++)
+		 	entityManager.addEntity(new Tree(handler, i*300, i*100));
+		}
+			
 		
 		loadWorld(path);
 		
@@ -42,7 +48,7 @@ public class World {
 		//what tiles user can see
 		int xStart = (int) Math.max(0, handler.getCamera().getxOffset() / Tile.TILEWIDTH); //returns bigger num		
 		int xEnd = (int) Math.min(width, (handler.getCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);
-		int yStart = (int) Math.max(0, handler.getCamera().getyOffset() / Tile.TILEHEIGHT); //returns bigger num		
+		int yStart = (int) Math.max(0, handler.getCamera().getyOffset() / Tile.TILEHEIGHT); 	
 		int yEnd = (int) Math.min(width, (handler.getCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
 		
 		for(int y = yStart; y < yEnd; y++) {

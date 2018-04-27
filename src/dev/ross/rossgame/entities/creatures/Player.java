@@ -85,11 +85,7 @@ public class Player extends Creature {
 			
 			if(e.getCollisionBounds(0, 0).intersects(attack_rect)) {
 				e.hurt(1);
-				//TODO: add FX for attacking (make player angry?)
 				playerAngry = true;
-				return;
-				
-				
 			}
 			
 		}

@@ -14,14 +14,24 @@ import dev.ross.rossgame.world.World;
 public class MenuState extends State {
 	
 	private UIManager uiManager;
+	private World world;
+	private World menu;
+	//private int w = Game.getWidth();
+
+	
 	
 	public MenuState(Handler handler) {
 		super(handler);
+		
+		//Add the background
+		menu = new World(handler, "res/worlds/menu.txt");
+		world = new World(handler, "res/worlds/world1.txt");
+		
 		uiManager = new UIManager(handler);
 		handler.getMouseManager().setUIManager(uiManager);
 		
-		//allows us to add a play button
-		uiManager.addObject(new UIImageButton(250, 250, 128, 64, Assets.button, 
+		//Add the play button (Start Game)
+		uiManager.addObject(new UIImageButton(300, 300, 128, 64, Assets.button, 
 					new ClickListener() {
 						@Override
 						public void onClick() {
@@ -34,12 +44,13 @@ public class MenuState extends State {
 	public void tick() {
 		uiManager.tick();
 		
-		if(handler.getMouseManager().isLeftPressed())
+		if(handler.getMouseManager().isLeftPressed())			
 			State.setState(handler.getGame().gameState);
-
 	}
 
 	public void render(Graphics g) {
+		
+		menu.render(g);
 		uiManager.render(g);
 		
 		//draw Mouse Pointer

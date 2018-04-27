@@ -32,7 +32,6 @@ public class Game implements Runnable {
 	public State gameState;
 	public State menuState;
 	
-	
 	//Input
 	private KeyManager keyManager;
 	private MouseManager mouseManager;
@@ -42,8 +41,7 @@ public class Game implements Runnable {
 	
 	//Handler
 	private Handler handler;
-	
-	
+
 	
 	//constructor
 	public Game(String title, int width, int height) {
@@ -125,8 +123,6 @@ public class Game implements Runnable {
 				render();
 				delta--;
 			}
-			
-
 		}
 	
 		stop();
