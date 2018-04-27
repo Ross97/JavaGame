@@ -5,11 +5,16 @@ import java.awt.Rectangle;
 
 import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.entities.Entity;
+import dev.ross.rossgame.entities.EntityManager;
 import dev.ross.rossgame.gfx.Assets;
 
 public class Player extends Creature {
-
 	
+	//Attack setting (to prevent spam attack)
+	private long lastAttackTimer, attackCooldown = 100, attackTimer = attackCooldown;
+	private boolean playerAngry = false;
+	
+
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT); 
 		
@@ -32,6 +37,12 @@ public class Player extends Creature {
 	}
 	
 	private void checkAttack() {
+		attackTimer += System.currentTimeMillis() - lastAttackTimer;
+		lastAttackTimer = System.currentTimeMillis();
+		
+		//prevent spam attack
+		if(attackTimer < attackCooldown)
+			return;
 		
 		Rectangle collision_bounds = getCollisionBounds(0, 0);
 		Rectangle attack_rect = new Rectangle();
@@ -59,8 +70,13 @@ public class Player extends Creature {
 		} 
 		
 		//not attacking
-		else
+		else {
+			playerAngry = false;
 			return;
+		}
+			
+		
+		attackTimer = 0;
 		
 		//attacking
 		for(Entity e : handler.getWorld().getEntityManager().getEntities()){
@@ -69,14 +85,18 @@ public class Player extends Creature {
 			
 			if(e.getCollisionBounds(0, 0).intersects(attack_rect)) {
 				e.hurt(1);
+				//TODO: add FX for attacking (make player angry?)
+				playerAngry = true;
 				return;
+				
+				
 			}
 			
 		}
 		
 		
 	}
-	
+	private EntityManager entityManager;
 	public void die() {
 		System.out.println("You died!");
 	}
@@ -96,8 +116,10 @@ public class Player extends Creature {
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(Assets.player, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null); //x and y from Entity class
-		
+		if(!playerAngry)
+			g.drawImage(Assets.player, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null); //x and y from Entity class
+		else
+			g.drawImage(Assets.playerAngry, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null); //x and y from Entity class
 		
 		/*draw Collision box (settings above)
 		g.setColor(Color.blue);
