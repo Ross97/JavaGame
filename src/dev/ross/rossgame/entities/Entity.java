@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 import dev.ross.rossgame.Game;
 import dev.ross.rossgame.Handler;
 //protected = private but extended classes have access
-//abstract = every class must implement their own (eg every entity implements die())
+//abstract = every class must implement their own (here every entity implements die())
 public abstract class Entity {
 	
 	public static final int DEFAULT_HEALTH = 10;
@@ -28,21 +28,22 @@ public abstract class Entity {
 		this.height = height;
 		
 		health = DEFAULT_HEALTH;
-		bounds = new Rectangle(width, height);
+		bounds = new Rectangle(0, 0, width, height);
 	}
 	
 	public abstract void tick();
 	public abstract void render(Graphics g);
+	public abstract void die();
 	
 	public void hurt(int amount) {
 		health -= amount;
+		
 		if(health <= 0){
 			active = false;
 			die();
 		}
 	}
-	
-	public abstract void die();
+
 	
 	public boolean checkEntityCollisions(float xOffset, float yOffset) {
 		for(Entity e : handler.getWorld().getEntityManager().getEntities()) {

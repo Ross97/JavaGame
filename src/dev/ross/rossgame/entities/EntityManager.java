@@ -35,8 +35,9 @@ public class EntityManager {
 	
 	public void tick() {
 		for(int i=0; i < entities.size(); i++) {
-			Entity e = entities.get(i); //Entity e = entities[i]
+			Entity e = entities.get(i); 
 			e.tick();
+			
 			if(!e.isActive())
 				entities.remove(e);
 		}
