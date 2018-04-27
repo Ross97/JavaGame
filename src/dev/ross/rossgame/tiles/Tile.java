@@ -6,9 +6,12 @@ import java.awt.image.BufferedImage;
 public class Tile {
 	//Create an instance of each tile, and give them separate IDs
 	public static Tile[] tiles = new Tile[256];
-	public static Tile grassTile = new GrassTile(0); //set object to grass class
-	public static Tile dirtTile = new DirtTile(1);
+	public static Tile grassTile = new GrassTile(0); 
+	public static Tile grassPlantTile = new GrassPlantTile(1);
+	public static Tile dirtTile = new DirtTile(3);
 	public static Tile rockTile = new RockTile(2);
+	public static Tile bushTile = new BushTile(4);
+	public static Tile bushBerryTile = new BushBerryTile(5);
 	
 	public static final int TILEWIDTH = 64, TILEHEIGHT = 64;
 	
