@@ -15,8 +15,8 @@ public class Player extends Creature {
 		
 		
 		//Bounds for collision for player
-		bounds.x = 16;
-		bounds.y = 32;
+		bounds.x = 20;
+		bounds.y = 30;
 		bounds.width = 32;
 		bounds.height = 32;
 	}
@@ -26,6 +26,10 @@ public class Player extends Creature {
 		getInput();
 		move(); //from Creature
 		handler.getCamera().centerOnEntity(this);
+	}
+	
+	public void die() {
+		System.out.println("You died!");
 	}
 	
 	private void getInput() {
@@ -48,12 +52,13 @@ public class Player extends Creature {
 		g.drawImage(Assets.player, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null); //x and y from Entity class
 		
 		
-		//draw Collision box (settings above)
+		/*draw Collision box (settings above)
 		g.setColor(Color.blue);
 		g.fillRect(	(int) (x + bounds.x - handler.getCamera().getxOffset()),
 					(int) (y + bounds.y - handler.getCamera().getyOffset()),
 					bounds.width,
 					bounds.height);
+					*/
 	}
 	
 }

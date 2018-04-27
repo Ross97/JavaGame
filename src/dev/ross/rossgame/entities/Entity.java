@@ -5,14 +5,21 @@ import java.awt.Rectangle;
 
 import dev.ross.rossgame.Game;
 import dev.ross.rossgame.Handler;
-
+//protected = private but extended classes have access
+//abstract = every class must implement their own (eg every entity implements die())
 public abstract class Entity {
-	//protected = private but extended classes have access
+	
+	public static final int DEFAULT_HEALTH = 10;
+	
 	protected Handler handler;
 	protected float x, y;
 	protected int width, height;
 	protected Rectangle bounds;
+	protected int health;
+	protected boolean active = true;
 	
+	
+
 	public Entity(Handler handler, float x, float y, int width, int height) {
 		this.handler = handler;
 		this.x = x;
@@ -20,31 +27,42 @@ public abstract class Entity {
 		this.width = width;
 		this.height = height;
 		
+		health = DEFAULT_HEALTH;
 		bounds = new Rectangle(width, height);
-		
 	}
 	
 	public abstract void tick();
 	public abstract void render(Graphics g);
 	
+	public void hurt(int amount) {
+		health -= amount;
+		if(health <= 0){
+			active = false;
+			die();
+		}
+	}
+	
+	public abstract void die();
+	
 	public boolean checkEntityCollisions(float xOffset, float yOffset) {
 		for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
-			//prevent checking itself
-			if(e.equals(this))
+			
+			if(e.equals(this)) //prevent checking itself
 				continue;
 			
 			//check all entities
-			if(e.getCollisionBounds(0, 0).intersects(getCollisionBounds(xOffset,yOffset)))
+			if(e.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset,yOffset)))
 				return true;
 		}
 		return false;
 	}
 	
 	public Rectangle getCollisionBounds(float xOffset, float yOffset) {
-		return new Rectangle((int) (x + bounds.x + xOffset), (int) (y+ bounds.y + yOffset), bounds.width, bounds.height);
+		return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
 	}
 	
 	
+	//Getters & Setters
 	public float getX() {
 		return x;
 	}
@@ -76,6 +94,23 @@ public abstract class Entity {
 	public void setHeight(int height) {
 		this.height = height;
 	}
+	
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 
 
 }

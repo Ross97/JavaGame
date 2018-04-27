@@ -18,6 +18,6 @@ public class Assets {
 		grass = sheet.crop(w*2, 0, w, h);
 		stone = sheet.crop(w*3, 0, w, h);
 		tree = sheet.crop(0, h, w, h);
-		button = sheet.crop(0, 0, w, h);
+		button = sheet.crop(w, h, w, h);
 	}
 }

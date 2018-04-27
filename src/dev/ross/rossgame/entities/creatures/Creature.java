@@ -7,35 +7,28 @@ import dev.ross.rossgame.tiles.Tile;
 
 public abstract class Creature extends Entity {
 	
-	public static final int DEFAULT_HEALTH = 10;
+	
 	public static final float DEFAULT_SPEED = 3;
 	public static final int DEFAULT_CREATURE_WIDTH = 64, DEFAULT_CREATURE_HEIGHT = 64;
 	
-	protected int health;
 	protected float speed;
 	protected float xMove, yMove;
 	
 	public Creature(Handler handler, float x, float y, int width, int height) {
 		super(handler, x, y, width, height); //super passes to Entity
-		health = DEFAULT_HEALTH;
 		speed = DEFAULT_SPEED;
 		xMove = 0;
 		yMove = 0;
 	}
 
-	public float getxMove() {
-		return xMove;
-	}
-	
 	
 	//Moves the creature, checks where it will be moving (place bounds there)
 	public void move() {
 		
-		
 		if(!checkEntityCollisions(xMove, 0))
 			moveX();
 		
-		if(!checkEntityCollisions(yMove, 0))
+		if(!checkEntityCollisions(0, yMove))
 			moveY();
 	}
 	
@@ -104,6 +97,10 @@ public abstract class Creature extends Entity {
 	
 	
 	//Getters and Setters
+	public float getxMove() {
+		return xMove;
+	}
+	
 	public void setxMove(float xMove) {
 		this.xMove = xMove;
 	}
