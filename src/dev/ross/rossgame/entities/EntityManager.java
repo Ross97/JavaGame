@@ -3,6 +3,7 @@ package dev.ross.rossgame.entities;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 
 import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.entities.creatures.Enemy;
@@ -37,12 +38,14 @@ public class EntityManager {
 	}
 	
 	public void tick() {
-		for(int i=0; i < entities.size(); i++) {
-			Entity e = entities.get(i); 
+		Iterator<Entity> i = entities.iterator();
+		
+		while(i.hasNext()) {
+			Entity e = i.next(); 
 			e.tick();
 			
 			if(!e.isActive())
-				entities.remove(e);
+				i.remove();
 		}
 		entities.sort(renderSorter);
 	}
