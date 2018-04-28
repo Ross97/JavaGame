@@ -7,6 +7,7 @@ import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.entities.Entity;
 import dev.ross.rossgame.entities.EntityManager;
 import dev.ross.rossgame.gfx.Assets;
+import dev.ross.rossgame.inventory.Inventory;
 
 public class Player extends Creature {
 	
@@ -14,16 +15,22 @@ public class Player extends Creature {
 	private long lastAttackTimer, attackCooldown = 100, attackTimer = attackCooldown;
 	private boolean playerAngry = false;
 	
+	private Inventory inventory;
+	
 
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT); 
 		health = 100;
+		inventory = new Inventory(handler);
+		
 		
 		//Bounds for collision
 		bounds.x = 20;
 		bounds.y = 30;
 		bounds.width = 32;
 		bounds.height = 32;
+		
+		inventory = new Inventory(handler);
 	}
 
 
@@ -35,6 +42,8 @@ public class Player extends Creature {
 		
 		//Attacking
 		checkAttack();
+		
+		inventory.tick();
 	}
 	
 	private void checkAttack() {
@@ -134,7 +143,22 @@ public class Player extends Creature {
 			g.drawImage(Assets.player, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null); //x and y from Entity class
 		else
 			g.drawImage(Assets.playerAngry, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null); //x and y from Entity class
+	
+		inventory.render(g);
 	}
+
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
+	}
+
+
+	
 	
 
 	

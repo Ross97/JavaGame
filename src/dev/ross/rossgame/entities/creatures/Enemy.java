@@ -7,6 +7,7 @@ import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.entities.Entity;
 import dev.ross.rossgame.entities.EntityManager;
 import dev.ross.rossgame.gfx.Assets;
+import dev.ross.rossgame.items.Item;
 
 public class Enemy extends Creature {
 	//Entities
@@ -14,6 +15,7 @@ public class Enemy extends Creature {
 	private float playerX, playerY;
 	private boolean nearby = false;
 	private float distance;
+	private boolean isAngry = false;
 
 	public Enemy(EntityManager manager, Handler handler, float x, float y, int width, int height) {
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT); 
@@ -44,6 +46,7 @@ public class Enemy extends Creature {
 		
 		//See player, follow it
 		if(nearby){ 
+			isAngry = true;
 			speed = 2;
 			if(playerY > y)
 				yMove = +speed;
@@ -56,6 +59,7 @@ public class Enemy extends Creature {
 				xMove = -speed;
 		}
 		else { //idle
+			isAngry = false;
 			yMove = 0;
 			xMove = 0;
 		}
@@ -65,8 +69,11 @@ public class Enemy extends Creature {
 	
 	//Draw the enemy
 	public void render(Graphics g) {
-		g.drawImage(Assets.player, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), (int)DEFAULT_CREATURE_WIDTH, (int)DEFAULT_CREATURE_HEIGHT, null); //x and y from Entity class
-
+		if(isAngry)
+			g.drawImage(Assets.enemyAngry, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), (int)DEFAULT_CREATURE_WIDTH, (int)DEFAULT_CREATURE_HEIGHT, null); 
+		else
+			g.drawImage(Assets.enemy, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), (int)DEFAULT_CREATURE_WIDTH, (int)DEFAULT_CREATURE_HEIGHT, null);
+		
 		/*draw Collision box
 		g.setColor(Color.blue);
 		g.fillRect(	(int) x, (int) y,bounds.width,bounds.height);*/
@@ -76,6 +83,7 @@ public class Enemy extends Creature {
 	@Override
 	public void die() {
 		System.out.println("Enemy killed!");
+		handler.getWorld().getItemManager().addItem(Item.enemyItem.createNew((int)x,(int)y));
 	}
 	
 

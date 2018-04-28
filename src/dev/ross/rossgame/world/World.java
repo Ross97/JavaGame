@@ -8,6 +8,7 @@ import dev.ross.rossgame.entities.EntityManager;
 import dev.ross.rossgame.entities.Tree;
 import dev.ross.rossgame.entities.creatures.Enemy;
 import dev.ross.rossgame.entities.creatures.Player;
+import dev.ross.rossgame.items.ItemManager;
 import dev.ross.rossgame.tiles.Tile;
 import dev.ross.rossgame.utils.Utils;
 
@@ -18,13 +19,15 @@ public class World {
 	private int[][] tiles; //store tile IDs and XY in here
 	
 	
-	//Entities
+	//Entities & Items
 	private EntityManager entityManager;
+	private ItemManager itemManager;
 
 	//load world file
 	public World(Handler handler, String path) {
 		this.handler = handler;
 		entityManager = new EntityManager(handler, new Player(handler, 100, 100));
+		itemManager = new ItemManager(handler);
 		
 		if(path=="res/worlds/world1.txt") {
 			 for(int i=0; i < 5; i ++)
@@ -43,6 +46,7 @@ public class World {
 	
 	public void tick() {
 		entityManager.tick();
+		itemManager.tick();
 	}
 	
 	//render each tile that is on screen
@@ -62,7 +66,8 @@ public class World {
 			}
 			
 		} 
-		//Render entities
+		//Render entities and items
+		itemManager.render(g);
 		entityManager.render(g);
 	}
 	
@@ -100,6 +105,27 @@ public class World {
 	}
 	
 	
+	
+	public Handler getHandler() {
+		return handler;
+	}
+
+	public void setHandler(Handler handler) {
+		this.handler = handler;
+	}
+
+	public ItemManager getItemManager() {
+		return itemManager;
+	}
+
+	public void setItemManager(ItemManager itemManager) {
+		this.itemManager = itemManager;
+	}
+
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
 	public int getWidth() {
 		return width;
 	}

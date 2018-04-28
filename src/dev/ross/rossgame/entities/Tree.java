@@ -4,6 +4,7 @@ import java.awt.Graphics;
 
 import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.gfx.Assets;
+import dev.ross.rossgame.items.Item;
 import dev.ross.rossgame.tiles.Tile;
 
 public class Tree extends StaticEntity{
@@ -24,13 +25,14 @@ public class Tree extends StaticEntity{
 	}
 	
 	@Override
-	public void die() {}
+	public void die() {
+		handler.getWorld().getItemManager().addItem(Item.treeItem.createNew((int)x,(int)y));
+	}
 	
 
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(Assets.tree, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null);
-		
 	}
 
 }
