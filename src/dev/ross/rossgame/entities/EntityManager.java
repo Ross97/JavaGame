@@ -60,9 +60,6 @@ public class EntityManager {
 
 
 	
-	
-	
-	
 	//GETTERS AND SETTERS
 	
 	public Handler getHandler() {

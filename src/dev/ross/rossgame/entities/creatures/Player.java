@@ -47,7 +47,7 @@ public class Player extends Creature {
 		Rectangle collision_bounds = getCollisionBounds(0, 0);
 		Rectangle attack_rect = new Rectangle();
 		
-		int arSize = 20; //how close
+		int arSize = 100; //how close
 		attack_rect.width = arSize;
 		attack_rect.height = arSize;
 		

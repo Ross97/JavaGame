@@ -31,7 +31,7 @@ public class World {
 			 for(int i=0; i < 5; i ++)
 			 	entityManager.addEntity(new Tree(handler, i*300, i*100));
 			
-			entityManager.addEntity(new Enemy(handler, 300, 300, 100, 100));
+			entityManager.addEntity(new Enemy(entityManager, handler, 300, 300, 100, 100));
 		}
 			
 		
