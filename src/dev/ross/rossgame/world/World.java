@@ -26,12 +26,12 @@ public class World {
 		this.handler = handler;
 		entityManager = new EntityManager(handler, new Player(handler, 100, 100));
 		
-		//if passed menu
 		if(path=="res/worlds/world1.txt") {
 			 for(int i=0; i < 5; i ++)
 			 	entityManager.addEntity(new Tree(handler, i*300, i*100));
 			
 			entityManager.addEntity(new Enemy(entityManager, handler, 300, 300, 100, 100));
+			entityManager.addEntity(new Enemy(entityManager, handler, 500, 500, 100, 100));
 		}
 			
 		

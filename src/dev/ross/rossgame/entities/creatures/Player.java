@@ -17,6 +17,7 @@ public class Player extends Creature {
 
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT); 
+		health = 100;
 		
 		//Bounds for collision
 		bounds.x = 20;
@@ -46,10 +47,31 @@ public class Player extends Creature {
 		
 		Rectangle collision_bounds = getCollisionBounds(0, 0);
 		Rectangle attack_rect = new Rectangle();
+		Rectangle hurt_rect = new Rectangle();
 		
-		int arSize = 100; //how close
+		int arSize = 50; //how close to attack other entities
+		int hurtSize = 50; //how close to be hurt
+		
+		//setup attack and hurt boxes
 		attack_rect.width = arSize;
 		attack_rect.height = arSize;
+		hurt_rect.width = hurtSize;
+		hurt_rect.height = hurtSize;
+		
+		hurt_rect.x = (int) x + bounds.width/2;
+		hurt_rect.y = (int) y + bounds.height/2;
+		
+		//Check if an enemy entity is within our hurtbox
+		for(Entity e : handler.getWorld().getEntityManager().getEntities()){
+			if(e.equals(this)) //ourself
+				continue;
+			
+			//Enemy is within our hurtbox, lose health
+			if(e.getCollisionBounds(0, 0).intersects(hurt_rect) && e.isEnemy()) {
+				System.out.println("Health: " + health);
+				this.hurt(1);
+			}
+		}
 		
 		//Check attack keys (arrow keys)
 		if(handler.getKeyManager().aUp) {

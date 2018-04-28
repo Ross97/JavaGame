@@ -11,11 +11,10 @@ import dev.ross.rossgame.entities.creatures.Player;
 public class EntityManager {
 	private Handler handler;
 	private Player player;
-	private Enemy enemy;
 	private ArrayList<Entity> entities; //arrayList allows adding or removing without trouble
 	
 	
-	//Comparator class
+	//Comparator class to see what to render first
 	private Comparator<Entity> renderSorter = new Comparator<Entity>() {
 
 		//compares two entities to decide which to render on top

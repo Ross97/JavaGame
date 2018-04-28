@@ -17,6 +17,7 @@ public abstract class Entity {
 	protected Rectangle bounds;
 	protected int health;
 	protected boolean active = true;
+	protected boolean isEnemy = false;
 	
 
 	public Entity(Handler handler, float x, float y, int width, int height) {
@@ -109,6 +110,10 @@ public abstract class Entity {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+	
+	public boolean isEnemy() {
+		return isEnemy;
 	}
 
 
