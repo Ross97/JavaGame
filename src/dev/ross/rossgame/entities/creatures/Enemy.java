@@ -49,7 +49,7 @@ public class Enemy extends Creature {
 	
 	//Draw the enemy
 	public void render(Graphics g) {
-		g.drawImage(Assets.player, (int)x, (int)y, (int)DEFAULT_CREATURE_WIDTH, (int)DEFAULT_CREATURE_HEIGHT, null); //x and y from Entity class
+		g.drawImage(Assets.player, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), (int)DEFAULT_CREATURE_WIDTH, (int)DEFAULT_CREATURE_HEIGHT, null); //x and y from Entity class
 
 		/*
 		//draw Collision box (settings above)
