@@ -1,12 +1,10 @@
 package dev.ross.rossgame.entities.creatures;
 
-import dev.ross.rossgame.Game;
 import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.entities.Entity;
 import dev.ross.rossgame.tiles.Tile;
 
 public abstract class Creature extends Entity {
-	
 	
 	public static final float DEFAULT_SPEED = 3;
 	public static final int DEFAULT_CREATURE_WIDTH = 64, DEFAULT_CREATURE_HEIGHT = 64;
@@ -15,14 +13,16 @@ public abstract class Creature extends Entity {
 	protected float xMove, yMove;
 	
 	public Creature(Handler handler, float x, float y, int width, int height) {
-		super(handler, x, y, width, height); //super passes to Entity
+		
+		super(handler, x, y, width, height);  //super passes up to Entity class
+		
 		speed = DEFAULT_SPEED;
 		xMove = 0;
 		yMove = 0;
 	}
 
 	
-	//Moves the creature, checks where it will be moving (place bounds there)
+	//Moves the creature, after checking where it will be moving for collisions (places bounds there)
 	public void move() {
 		
 		if(!checkEntityCollisions(xMove, 0))
@@ -32,28 +32,32 @@ public abstract class Creature extends Entity {
 			moveY();
 	}
 	
+	//Checks if the collision entity is solid
+	protected boolean collisionWithTile(int x, int y) {
+		return handler.getWorld().getTile(x, y).isSolid();
+	}
 	
 	//Check bounding box for collision
 	public void moveX() {
 		
-		//moving right
+		//Creature moving right
 		if(xMove > 0) { 
 			int tempX = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
 			
-			//checks right of bound box
-			if(!collisionWithTile(tempX, (int) (y+bounds.y) / Tile.TILEHEIGHT ) &&
+			//Checks to the right of the bounds
+			if(		!collisionWithTile(tempX, (int) (y+bounds.y) / Tile.TILEHEIGHT ) &&
 					!collisionWithTile(tempX, (int) (y+bounds.y+bounds.height) / Tile.TILEHEIGHT )) {
 				x += xMove;
-			}else {
-				x = tempX * Tile.TILEWIDTH - bounds.x - bounds.width - 1; //get pixel co-ords (1 prevents bug)
+			} else {
+				x = tempX * Tile.TILEWIDTH - bounds.x - bounds.width - 1; //Move back 1 pixel to prevent bug
 			}
 		}
 		
-		//moving left
+		//Creature moving left
 		else if (xMove < 0) {
 			int tempX = (int) (x + xMove + bounds.x) / Tile.TILEWIDTH;
 			
-			//checks left of bound box
+			//Checks to the left of the bounds
 			if(!collisionWithTile(tempX, (int) (y+bounds.y) / Tile.TILEHEIGHT ) &&
 					!collisionWithTile(tempX, (int) (y+bounds.y+bounds.height) / Tile.TILEHEIGHT )) {
 				x += xMove;
@@ -62,11 +66,18 @@ public abstract class Creature extends Entity {
 			}
 		}
 		
+		//Out of map
+		if(x < -bounds.width)
+			x = -bounds.width;
+		if(y < -bounds.height)
+			y = -bounds.height;
+		
 	}
 	
+	//Check bounding box for collision
 	public void moveY() {
 		
-		//going up
+		//Creature moving up
 		if(yMove < 0) {
 			int tempY = (int) (y + yMove + bounds.y) / Tile.TILEHEIGHT;
 			
@@ -78,7 +89,7 @@ public abstract class Creature extends Entity {
 			}
 		}
 		
-		//going down
+		//Creature moving down
 		else if(yMove > 0) {
 			int tempY = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILEHEIGHT;
 			
@@ -86,17 +97,15 @@ public abstract class Creature extends Entity {
 					!collisionWithTile((int) (x+bounds.x+bounds.width) / Tile.TILEWIDTH, tempY)	) {
 				y += yMove;
 			}else {
-				y = tempY * Tile.TILEHEIGHT - bounds.height - bounds.y -1; //for better collision
+				y = tempY * Tile.TILEHEIGHT - bounds.height - bounds.y -1; //Move back 1 pixel to prevent bug
 			}
 		}
 	}
 	
-	protected boolean collisionWithTile(int x, int y) {
-		return handler.getWorld().getTile(x, y).isSolid();
-	}
+
 	
 	
-	//Getters and Setters
+	//Getters & Setters
 	public float getxMove() {
 		return xMove;
 	}

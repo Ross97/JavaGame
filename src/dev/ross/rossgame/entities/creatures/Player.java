@@ -5,48 +5,51 @@ import java.awt.Rectangle;
 
 import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.entities.Entity;
-import dev.ross.rossgame.entities.EntityManager;
 import dev.ross.rossgame.gfx.Assets;
 import dev.ross.rossgame.inventory.Inventory;
 
 public class Player extends Creature {
 	
-	//Attack setting (to prevent spam attack)
-	private long lastAttackTimer, attackCooldown = 100, attackTimer = attackCooldown;
-	private boolean playerAngry = false;
-	
+	//Add instance of inventory
 	private Inventory inventory;
 	
+	//Attack setting (to prevent spamming attack)
+	private long lastAttackTimer, attackCooldown = 100, attackTimer = attackCooldown;
+	private boolean playerAngry = false;
 
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT); 
+		
+		//Set higher tahn default health, and add inventory
 		health = 100;
 		inventory = new Inventory(handler);
-		
 		
 		//Bounds for collision
 		bounds.x = 20;
 		bounds.y = 30;
 		bounds.width = 32;
 		bounds.height = 32;
-		
-		inventory = new Inventory(handler);
 	}
 
-
+	//Update the player and inventory by getting input
 	public void tick() {
 		//Movement
 		getInput();
 		move(); //from Creature
+		
+		//Center the Camera on the player
 		handler.getCamera().centerOnEntity(this);
 		
-		//Attacking
+		//Check if attack is valid
 		checkAttack();
 		
+		//Update the inventory
 		inventory.tick();
 	}
 	
 	private void checkAttack() {
+		
+		//Timers to prevent insta-kills with spam attack
 		attackTimer += System.currentTimeMillis() - lastAttackTimer;
 		lastAttackTimer = System.currentTimeMillis();
 		
@@ -54,14 +57,15 @@ public class Player extends Creature {
 		if(attackTimer < attackCooldown)
 			return;
 		
+		//Setup bounds for collision/attack/hurt boxes
 		Rectangle collision_bounds = getCollisionBounds(0, 0);
 		Rectangle attack_rect = new Rectangle();
 		Rectangle hurt_rect = new Rectangle();
 		
-		int arSize = 50; //how close to attack other entities
+		int arSize = 20; //how close to attack other entities
 		int hurtSize = 50; //how close to be hurt
 		
-		//setup attack and hurt boxes
+		//Setup attack and hurt boxes
 		attack_rect.width = arSize;
 		attack_rect.height = arSize;
 		hurt_rect.width = hurtSize;
@@ -70,7 +74,7 @@ public class Player extends Creature {
 		hurt_rect.x = (int) x + bounds.width/2;
 		hurt_rect.y = (int) y + bounds.height/2;
 		
-		//Check if an enemy entity is within our hurtbox
+		//Check if an enemy entity is within the hurtbox
 		for(Entity e : handler.getWorld().getEntityManager().getEntities()){
 			if(e.equals(this)) //ourself
 				continue;
@@ -82,7 +86,7 @@ public class Player extends Creature {
 			}
 		}
 		
-		//Check attack keys (arrow keys)
+		//Check attack keys (arrow keys) with correct attack box
 		if(handler.getKeyManager().aUp) {
 			attack_rect.x = collision_bounds.x + collision_bounds.width/2 - arSize/2;
 			attack_rect.y = collision_bounds.y - arSize;
@@ -120,10 +124,12 @@ public class Player extends Creature {
 
 	}
 
+	//Game over
 	public void die() {
 		System.out.println("You died!");
 	}
 	
+	//Move according to input (WASD)
 	private void getInput() {
 		xMove = 0;
 		yMove = 0;
@@ -138,11 +144,12 @@ public class Player extends Creature {
 			xMove = speed;
 	}
 
+	//Draw the player and inventory (depending on state)
 	public void render(Graphics g) {
-		if(!playerAngry)
-			g.drawImage(Assets.player, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null); //x and y from Entity class
-		else
+		if(playerAngry)
 			g.drawImage(Assets.playerAngry, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null); //x and y from Entity class
+		else
+			g.drawImage(Assets.player, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null); //x and y from Entity class
 	
 		inventory.render(g);
 	}
@@ -152,14 +159,14 @@ public class Player extends Creature {
 		return inventory;
 	}
 
-
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
 	}
 
-
-	
-	
+	//For enemy
+	public boolean getActive() {
+		return active;
+	}
 
 	
 }

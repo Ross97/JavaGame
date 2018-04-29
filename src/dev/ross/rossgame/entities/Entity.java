@@ -3,14 +3,13 @@ package dev.ross.rossgame.entities;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import dev.ross.rossgame.Game;
 import dev.ross.rossgame.Handler;
+
 //protected = private but extended classes have access
-//abstract = every class must implement their own (here every entity implements die())
+//abstract = every class must implement their own version of this (here every entity implements die())
 public abstract class Entity {
 	
-	public static final int DEFAULT_HEALTH = 10;
-	
+	//Setup protected variables
 	protected Handler handler;
 	protected float x, y;
 	protected int width, height;
@@ -19,7 +18,7 @@ public abstract class Entity {
 	protected boolean active = true;
 	protected boolean isEnemy = false;
 	
-
+	//Constructor to initialize every entity
 	public Entity(Handler handler, float x, float y, int width, int height) {
 		this.handler = handler;
 		this.x = x;
@@ -27,14 +26,17 @@ public abstract class Entity {
 		this.width = width;
 		this.height = height;
 		
-		health = DEFAULT_HEALTH;
+		//Set the health and collision bounds (10 is default, can change in class)
+		health = 10;
 		bounds = new Rectangle(0, 0, width, height);
 	}
 	
+	//All classes that extend must implement:
 	public abstract void tick();
 	public abstract void render(Graphics g);
 	public abstract void die();
 	
+	//If entity is hurt, lose health and die
 	public void hurt(int amount) {
 		health -= amount;
 		
@@ -43,24 +45,30 @@ public abstract class Entity {
 			die();
 		}
 	}
-
 	
+	//Set the collision bounds using the defined bounds x and y alongside the width and height
+	public Rectangle getCollisionBounds(float xOffset, float yOffset) {
+		return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
+	}
+	
+
+	//Check the entity for collisions
 	public boolean checkEntityCollisions(float xOffset, float yOffset) {
+		
+		//Loop through each entity and check if it collides with another entity (not itself)
 		for(Entity e : handler.getWorld().getEntityManager().getEntities()) {
 			
-			if(e.equals(this)) //prevent checking itself
+			//prevents checking itself
+			if(e.equals(this)) 
 				continue;
 			
-			//check all entities
+			//check all other entities for collision
 			if(e.getCollisionBounds(0f, 0f).intersects(getCollisionBounds(xOffset,yOffset)))
 				return true;
 		}
 		return false;
 	}
 	
-	public Rectangle getCollisionBounds(float xOffset, float yOffset) {
-		return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
-	}
 	
 	
 	//Getters & Setters

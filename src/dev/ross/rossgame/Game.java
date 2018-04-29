@@ -11,14 +11,15 @@ import dev.ross.rossgame.states.GameState;
 import dev.ross.rossgame.states.MenuState;
 import dev.ross.rossgame.states.State;
 
-//allow game ot run in a thread
-public class Game implements Runnable {
+
+public class Game implements Runnable { //Runnable allows threading with run()
 	
 	//create display object
 	private Display display;
 	private int width, height;
 	public String title;
 	
+	//threading
 	private boolean running = false;
 	private Thread thread;
 	
@@ -28,11 +29,11 @@ public class Game implements Runnable {
 	//graphics object, allows to draw to canvas
 	private Graphics g;
 	
-	//States
+	//States (ie what level is the player on)
 	public State gameState;
 	public State menuState;
 	
-	//Input
+	//Input management
 	private KeyManager keyManager;
 	private MouseManager mouseManager;
 	
@@ -53,27 +54,32 @@ public class Game implements Runnable {
 		mouseManager = new MouseManager();
 	}
 	
+	//Setup the display
 	public void init() {
 		display = new Display(title,width,height);
 		
 		display.getFrame().addKeyListener(keyManager); //get JFrame and add key listener
-		display.getFrame().addMouseListener(mouseManager);
+		display.getFrame().addMouseListener(mouseManager); //add mouseManager to JFrame
 		display.getFrame().addMouseMotionListener(mouseManager);
-		display.getCanvas().addMouseListener(mouseManager);
-		display.getCanvas().addMouseMotionListener(mouseManager);
+		display.getCanvas().addMouseListener(mouseManager); //get Canvas and add key listener
+		display.getCanvas().addMouseMotionListener(mouseManager); //add mouseManager to Canvas
 
-		Assets.init();
+		Assets.init(); //get our assets from the asset class
 		
+		//Create handler and camera objects
 		handler = new Handler(this);
-		camera = new Camera(handler, 0,0);
+		camera = new Camera(handler, 0,0); //(handler,x,y)
 		
+		//Setup our states (levels)
 		gameState = new GameState(handler);
 		menuState = new MenuState(handler);
+		
+		//Set the state
 		State.setState(menuState);
 	}
 
 	
-
+	//Update the keyManager and tick the state
 	private void tick() { 
 		keyManager.tick();
 		
@@ -82,8 +88,12 @@ public class Game implements Runnable {
 	}
 	
 	
+	//Render the game using BufferStrategy
 	private void render() {
+		
 		bs = display.getCanvas().getBufferStrategy();
+		
+		//create a bufferStrategy if none exists
 		if(bs==null) {
 			display.getCanvas().createBufferStrategy(3);
 			return;
@@ -94,7 +104,7 @@ public class Game implements Runnable {
 		//Clear the screen
 		g.clearRect(0, 0, width, height);
 		
-		//Start drawing
+		//Draw the state
 		if(State.getState() != null)
 			State.getState().render(g);
 		
@@ -103,21 +113,25 @@ public class Game implements Runnable {
 		g.dispose();
 	}
 	
+	
+	//Run the game using threads
 	public void run() {
 		init(); //for threading
 		
+		//Set FPS for the display
 		int fps = 60;
-		double timePerTick = 1000000000/fps; //1sec/fps, max time to run tick/render
+		double timePerTick = 1000000000/fps; //max time to run tick/render (once per FPS)
 		double delta = 0;
 		long now; //current time
 		long lastTime = System.nanoTime(); //returns time of pc 
 		
 		while(running) {
+			//Calculate timings
 			now = System.nanoTime();
 			delta += (now - lastTime) / timePerTick;
 			lastTime = now;
 			
-			
+			//Render every frame
 			if(delta >= 1) {
 				tick();
 				render();
@@ -125,10 +139,11 @@ public class Game implements Runnable {
 			}
 		}
 	
+		//Stop running the thread
 		stop();
 	}
 	
-	//Threading
+	//Start thread to run the game
 	public synchronized void start() {
 		if(running)
 			return;
@@ -137,6 +152,7 @@ public class Game implements Runnable {
 		thread.start(); //calls run()
 	}
 	
+	//Stop the thread of the game
 	public synchronized void stop() {
 		if(!running)
 			return;
@@ -150,8 +166,7 @@ public class Game implements Runnable {
 		
 	}
 	
-	//getters/setters
-	
+	//Getters & Setters
 	public KeyManager getKeyManager() {
 		return keyManager;
 	}
@@ -167,6 +182,7 @@ public class Game implements Runnable {
 	public int getWidth() {
 		return width;
 	}
+	
 	public int getHeight() {
 		return height;
 	}

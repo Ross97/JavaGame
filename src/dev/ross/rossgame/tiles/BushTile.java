@@ -7,7 +7,6 @@ public class BushTile extends Tile {
 		super(Assets.bush, id);
 	}
 	
-	@Override
 	public boolean isSolid() {
 		return true;
 	}

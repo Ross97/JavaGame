@@ -2,7 +2,7 @@ package dev.ross.rossgame.entities;
 
 import dev.ross.rossgame.Handler;
 
-//Class for all static entities (trees, rocks etc will extend this class)
+//Abstract class for all static entities to extend 
 
 public abstract class StaticEntity extends Entity {
 	public StaticEntity(Handler handler, float x, float y, int width, int height) {

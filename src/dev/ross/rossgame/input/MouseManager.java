@@ -8,13 +8,17 @@ import dev.ross.rossgame.UI.UIManager;
 
 public class MouseManager implements MouseListener, MouseMotionListener {
 
+	//Left click, right click, and mouse position
 	private boolean leftPressed, rightPressed;
 	private int mouseX, mouseY;
+	
+	//For buttons
 	private UIManager uiManager;
 	
-	
+	//Constructor
 	public MouseManager(){}
 	
+	//For UImanagerment (buttons etc)
 	public void setUIManager(UIManager uiManager) {
 		this.uiManager = uiManager;
 	}
@@ -34,9 +38,8 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	}
 	
 	
-	//Methods
-
-	@Override
+	//Functions
+	
 	public void mouseMoved(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
@@ -46,7 +49,6 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 	}
 
 
-	@Override
 	public void mousePressed(MouseEvent e) {
 		
 		//left click
@@ -58,7 +60,6 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 			rightPressed = true;
 	}
 
-	@Override
 	public void mouseReleased(MouseEvent e) {
 		
 		//left click
@@ -73,24 +74,10 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 			uiManager.onMouseMove(e);
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		
-	}
+	//Auto generated functions for mouse stuff
+	public void mouseClicked(MouseEvent e) {}
+	public void mouseEntered(MouseEvent e) {}
+	public void mouseExited(MouseEvent e) {}
+	public void mouseDragged(MouseEvent e) {}
 
 }

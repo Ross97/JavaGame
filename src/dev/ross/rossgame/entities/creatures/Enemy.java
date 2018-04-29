@@ -1,27 +1,26 @@
 package dev.ross.rossgame.entities.creatures;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import dev.ross.rossgame.Handler;
-import dev.ross.rossgame.entities.Entity;
-import dev.ross.rossgame.entities.EntityManager;
 import dev.ross.rossgame.gfx.Assets;
 import dev.ross.rossgame.items.Item;
 
 public class Enemy extends Creature {
-	//Entities
-	private EntityManager entityManager;
-	private float playerX, playerY;
+	
+	//Enemy properties
 	private boolean nearby = false;
 	private float distance;
 	private boolean isAngry = false;
+	
+	//Store player X,Y for AI
+	private float playerX, playerY;
 
-	public Enemy(EntityManager manager, Handler handler, float x, float y, int width, int height) {
+	public Enemy(Handler handler, float x, float y, int width, int height) {
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT); 
-		
-		this.entityManager = manager;
+
 		isEnemy = true;
+		
 		//Bounds for collision
 		bounds.x = 20;
 		bounds.y = 30;
@@ -29,13 +28,17 @@ public class Enemy extends Creature {
 		bounds.height = 32;
 	}
 	
+	//Update the enemy, build simple AI
 	public void tick() {
-		playerX = entityManager.getPlayer().getX();
-		playerY = entityManager.getPlayer().getY();
 		
+		//Get the player X and Y
+		playerX = handler.getWorld().getEntityManager().getPlayer().getX();
+		playerY = handler.getWorld().getEntityManager().getPlayer().getY();
+		
+		//Find the distance from the player
 		distance = (float) Math.sqrt((x-playerX)*(x-playerX) + (y-playerY)*(y-playerY));
 		
-		//Check if can see player
+		//Check if can nearby player
 		if(distance < 200)
 			nearby = true;
 		else
@@ -44,10 +47,11 @@ public class Enemy extends Creature {
 		//Movement for enemy
 		move(); //from Creature
 		
-		//See player, follow it
-		if(nearby){ 
+		//If can see player, and player is alive, follow it
+		if(nearby && handler.getWorld().getEntityManager().getPlayer().getActive()){ 
 			isAngry = true;
 			speed = 2;
+			
 			if(playerY > y)
 				yMove = +speed;
 			else
@@ -72,15 +76,10 @@ public class Enemy extends Creature {
 		if(isAngry)
 			g.drawImage(Assets.enemyAngry, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), (int)DEFAULT_CREATURE_WIDTH, (int)DEFAULT_CREATURE_HEIGHT, null); 
 		else
-			g.drawImage(Assets.enemy, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), (int)DEFAULT_CREATURE_WIDTH, (int)DEFAULT_CREATURE_HEIGHT, null);
-		
-		/*draw Collision box
-		g.setColor(Color.blue);
-		g.fillRect(	(int) x, (int) y,bounds.width,bounds.height);*/
-					
+			g.drawImage(Assets.enemy, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), (int)DEFAULT_CREATURE_WIDTH, (int)DEFAULT_CREATURE_HEIGHT, null);		
 	}
 
-	@Override
+	//If Enemy dies, add the itemDrop
 	public void die() {
 		System.out.println("Enemy killed!");
 		handler.getWorld().getItemManager().addItem(Item.enemyItem.createNew((int)x,(int)y));

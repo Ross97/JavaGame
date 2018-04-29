@@ -7,15 +7,15 @@ import javax.imageio.ImageIO;
 
 public class ImageLoader {
 	
+	//Loads in the image we want by passing in its path
+	
 	public static BufferedImage loadImage(String path) {
 		try {
-			//load in the image (path is image location)
 			return ImageIO.read(ImageLoader.class.getResource(path));
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
-		return null; //avoids error
+		return null; 
 	}
 }

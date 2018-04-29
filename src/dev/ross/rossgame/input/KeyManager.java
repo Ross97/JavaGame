@@ -3,32 +3,42 @@ package dev.ross.rossgame.input;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+//KeyListener is used for receiving keyboard events (keystrokes)
 public class KeyManager implements KeyListener {
 	
-	
+	//Store the keys in booleans
 	private boolean[] keys, justPressed, cantPress;
+	private final static int sizeOfKeys = 128;
+	
+	//Individual keys
 	public boolean up, down, left, right, aUp, aDown, aLeft, aRight;
 	
-	
+	//Create arrays for each key state
 	public KeyManager() {
-		keys = new boolean[256];
-		justPressed = new boolean[keys.length];
-		cantPress = new boolean[keys.length];
+		keys = new boolean[sizeOfKeys];
+		justPressed = new boolean[sizeOfKeys];
+		cantPress = new boolean[sizeOfKeys];
 	}
 	
+	//Update out arrays to see what keys are being / have been pressed
 	public void tick() {
-		for(int i = 0;i < keys.length;i++){
-			if(cantPress[i] && !keys[i]){
+		
+		//Go through each key
+		for(int i = 0;i < keys.length;i++)
+		{
+			if(cantPress[i] && !keys[i])
 				cantPress[i] = false;
-			}else if(justPressed[i]){
+			else if(justPressed[i]){
 				cantPress[i] = true;
 				justPressed[i] = false;
 			}
-			if(!cantPress[i] && keys[i]){
+			
+			//Determine which key was just pressed
+			if(!cantPress[i] && keys[i])
 				justPressed[i] = true;
-			}
 		}
 
+		//Name each key
 		up = keys[KeyEvent.VK_W];
 		down = keys[KeyEvent.VK_S];
 		left = keys[KeyEvent.VK_A];
@@ -39,6 +49,7 @@ public class KeyManager implements KeyListener {
 		aRight = keys[KeyEvent.VK_RIGHT];
 	}
 
+	//Called from inventory class
 	public boolean keyJustPressed(int keyCode){
 		if(keyCode < 0 || keyCode >= keys.length)
 			return false;

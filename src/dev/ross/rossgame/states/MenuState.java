@@ -1,9 +1,7 @@
 package dev.ross.rossgame.states;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
-import dev.ross.rossgame.Game;
 import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.UI.ClickListener;
 import dev.ross.rossgame.UI.UIImageButton;
@@ -13,20 +11,17 @@ import dev.ross.rossgame.world.World;
 
 public class MenuState extends State {
 	
+	//Setup fields for the menu
 	private UIManager uiManager;
-	private World world;
 	private World menu;
-	//private int w = Game.getWidth();
 
-	
-	
 	public MenuState(Handler handler) {
 		super(handler);
 		
 		//Add the background
 		menu = new World(handler, "res/worlds/menu.txt");
-		world = new World(handler, "res/worlds/world1.txt");
-		
+
+		//Setup the UIManager for buttons
 		uiManager = new UIManager(handler);
 		handler.getMouseManager().setUIManager(uiManager);
 		
@@ -41,6 +36,7 @@ public class MenuState extends State {
 					}));
 	}
 	
+	//Tick the button and set the gameState when left click is pressed
 	public void tick() {
 		uiManager.tick();
 		
@@ -48,14 +44,10 @@ public class MenuState extends State {
 			State.setState(handler.getGame().gameState);
 	}
 
+	//Render the world and button
 	public void render(Graphics g) {
-		
 		menu.render(g);
 		uiManager.render(g);
-		
-		//draw Mouse Pointer
-		g.setColor(Color.black);
-		g.fillRect(handler.getMouseManager().getMouseX(), handler.getMouseManager().getMouseY(), 5, 5);
 	}
 
 }

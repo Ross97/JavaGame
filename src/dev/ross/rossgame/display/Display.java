@@ -7,13 +7,15 @@ import javax.swing.JFrame;
 
 public class Display {
 	
+	//Setup Jframe and Canvas
 	private JFrame frame;
 	private Canvas canvas;
 	
+	//Data passed from Game()
 	private String title;
 	private int width, height;
 	
-	//constructor
+	//Called from Game, passes gameName, width, and height
 	public Display(String title, int width, int height) {
 		this.title = title;
 		this.width = width;
@@ -22,13 +24,15 @@ public class Display {
 		createDisplay();
 	}
 	
+	//Setup the Jframe and Canvas to create the display
 	private void createDisplay() {
 		frame = new JFrame(title);
 		frame.setSize(width, height);
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //close game when window closes
-		frame.setResizable(false); 
+		frame.setResizable(false); //do not allow window resize
 		frame.setLocationRelativeTo(null); //center of screen instead of side
-		frame.setVisible(true);
+		frame.setVisible(true); //show the game
 		
 		//create the canvas (locked dimensions)
 		canvas = new Canvas();
@@ -41,11 +45,13 @@ public class Display {
 		frame.pack(); //resize to fully see canvas
 	}
 	
+	
+	//Getters & Setters
 	public Canvas getCanvas() {
-		return canvas; //(allows us to access this var from other classes)
+		return canvas; //(allows us to access Canvas from other classes)
 	}
 	
 	public JFrame getFrame(){
-		return frame; //returns frame from this class
+		return frame; //returns the frame from this class
 	}
 }

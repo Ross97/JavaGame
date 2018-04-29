@@ -17,20 +17,16 @@ public class Tree extends StaticEntity{
 		bounds.y = (int) (height / 1.5f);
 		bounds.width = width - 20;
 		bounds.height = (int) (height - height / 1.5f);
-		
 	}
 
-	@Override
-	public void tick() {
-	}
+	public void tick() {}
 	
-	@Override
+	//Add the item pickup when dead
 	public void die() {
 		handler.getWorld().getItemManager().addItem(Item.treeItem.createNew((int)x,(int)y));
 	}
 	
-
-	@Override
+	//Draw the tree
 	public void render(Graphics g) {
 		g.drawImage(Assets.tree, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null);
 	}

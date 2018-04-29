@@ -1,12 +1,10 @@
 package dev.ross.rossgame.gfx;
 
-import dev.ross.rossgame.Game;
 import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.entities.Entity;
 import dev.ross.rossgame.tiles.Tile;
 
 public class Camera {
-	
 	
 	private Handler handler;
 	private float xOffset, yOffset;
@@ -15,6 +13,13 @@ public class Camera {
 		this.handler = handler;
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
+	}
+	
+	//Center on a specific Entity (player)
+	public void centerOnEntity(Entity e) {
+		xOffset = e.getX() - handler.getWidth() / 2 + e.getWidth() / 2;
+		yOffset = e.getY() - handler.getHeight() / 2 + e.getHeight() / 2;
+		CheckBlankSpace();
 	}
 	
 	//Checks for blank space (out of map) and prevents camera from panning to it
@@ -31,22 +36,10 @@ public class Camera {
 			yOffset = handler.getWorld().getHeight() * Tile.TILEHEIGHT - handler.getHeight();
 		}
 	}
-	
-	public void centerOnEntity(Entity e) {
-		xOffset = e.getX() - handler.getWidth() / 2 + e.getWidth() / 2;
-		yOffset = e.getY() - handler.getHeight() / 2 + e.getHeight() / 2;
-		CheckBlankSpace();
-	}
-	
-	public void move(float xAmt, float yAmt) {
-		xOffset += xAmt;
-		yOffset += yAmt;
-		CheckBlankSpace();
-	}
+
 	
 	
-	//setters and getters
-	
+	//Setters & Getters
 	public float getxOffset() {
 		return xOffset;
 	}
