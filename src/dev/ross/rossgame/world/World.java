@@ -54,7 +54,7 @@ public class World {
 		itemManager.tick();
 	}
 	
-	//Eender each tile, entity, and item that is on screen
+	//Render each tile, entity, and item that is on screen
 	public void render(Graphics g) {
 		
 		//What tiles user can see (and thus should render)

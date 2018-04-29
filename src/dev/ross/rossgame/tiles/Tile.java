@@ -12,6 +12,7 @@ public class Tile {
 	public static Tile rockTile = new RockTile(2);
 	public static Tile bushTile = new BushTile(4);
 	public static Tile bushBerryTile = new BushBerryTile(5);
+	public static Tile buttonTile = new ButtonTile(6);
 	
 	//Tile width and height
 	public static final int TILEWIDTH = 64, TILEHEIGHT = 64;
