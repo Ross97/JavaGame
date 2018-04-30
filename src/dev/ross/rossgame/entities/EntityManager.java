@@ -44,6 +44,9 @@ public class EntityManager {
 	public void render(Graphics g) {
 		for(Entity e : entities)
 			e.render(g);
+		
+		//Ensure inventory is rendered above everything else
+		player.renderLast(g);
 	}
 	
 	//Function to add entities

@@ -73,8 +73,13 @@ public class Item {
 	
 	
 	//Getters & Setters
+	
 	public Handler getHandler() {
 		return handler;
+	}
+
+	public void setPickedUp(boolean pickedUp) {
+		this.pickedUp = pickedUp;
 	}
 
 	public void setHandler(Handler handler) {

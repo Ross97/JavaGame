@@ -1,11 +1,13 @@
 package dev.ross.rossgame.entities.creatures;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.entities.Entity;
 import dev.ross.rossgame.gfx.Assets;
+import dev.ross.rossgame.gfx.Text;
 import dev.ross.rossgame.inventory.Inventory;
 
 public class Player extends Creature {
@@ -150,8 +152,11 @@ public class Player extends Creature {
 			g.drawImage(Assets.playerAngry, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null); //x and y from Entity class
 		else
 			g.drawImage(Assets.player, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null); //x and y from Entity class
+	}
 	
+	public void renderLast(Graphics g) {
 		inventory.render(g);
+		Text.drawString(g, "Health: " + Integer.toString(health), handler.getWidth() - 200, 50, Color.WHITE, Assets.font_size28);
 	}
 
 

@@ -1,5 +1,6 @@
 package dev.ross.rossgame.gfx;
 
+import java.awt.Font;
 import java.awt.image.BufferedImage;
 
 //Loads in all assets from spritesheet
@@ -14,8 +15,16 @@ public class Assets {
 	//Size of images
 	private static final int w = 32, h = 32; 
 	
+	//Font
+	public static Font font_size28;
+	
 	
 	public static void init() {
+		
+		//Load the font
+		font_size28 = FontLoader.loadFont("res/fonts/slkscr.ttf", 28);
+		
+		//Load the spritesheet
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
 		
 		//Player
