@@ -1,9 +1,12 @@
 package dev.ross.rossgame.states;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 
 import dev.ross.rossgame.Handler;
+import dev.ross.rossgame.gfx.Assets;
+import dev.ross.rossgame.gfx.Text;
 import dev.ross.rossgame.world.World;
 
 //Main game level
@@ -28,6 +31,9 @@ public class GameState extends State {
 	//Render everything in the world
 	public void render(Graphics g) {
 		world.render(g);
+		
+		//Draw player HUD
+		Text.drawString(g, "Health: " + Integer.toString(handler.getWorld().getEntityManager().getPlayer().getHealth()), handler.getWidth() - 200, 50, Color.WHITE, Assets.font_size28);
 	}
 
 }

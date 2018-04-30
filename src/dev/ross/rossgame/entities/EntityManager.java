@@ -21,6 +21,7 @@ public class EntityManager {
 		this.player = player;
 
 		entities = new ArrayList<Entity>();
+
 		addEntity(player);
 	}
 	
@@ -28,7 +29,6 @@ public class EntityManager {
 	//Iterate through the entities and tick them
 	public void tick() {
 		Iterator<Entity> i = entities.iterator();
-		
 		while(i.hasNext()) {
 			Entity e = i.next(); 
 			e.tick();

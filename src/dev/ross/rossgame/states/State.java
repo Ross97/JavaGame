@@ -23,7 +23,6 @@ public abstract class State {
 		return currentState;
 	}
 	
-	
 	public abstract void tick();
 	public abstract void render(Graphics g); //allows drawing to screen
 	

@@ -36,13 +36,13 @@ public class Inventory {
 		if(!active)
 			return;
 		
-		int linespace = 50;
+		int linespace = 30;
 		int tabwidth = 100;
 					
-		Text.drawString(g, "Inventory:", 50, 500, Color.WHITE, Assets.font_size28);
+		Text.drawString(g, "Inventory:", 5, handler.getHeight()-70, Color.WHITE, Assets.font_size28);
 		for(Item i : inventoryItems) {
-			Text.drawString(g, i.getName(), 50, 500 + linespace, Color.WHITE, Assets.font_size28);
-			Text.drawString(g, Integer.toString(i.getCount()), 50 + tabwidth, 500 + linespace, Color.WHITE, Assets.font_size28);
+			Text.drawString(g, i.getName(), 5, handler.getHeight()-70 + linespace, Color.WHITE, Assets.font_size28);
+			Text.drawString(g, Integer.toString(i.getCount()), 5 + tabwidth, handler.getHeight()-70 + linespace, Color.WHITE, Assets.font_size28);
 			linespace = linespace + linespace;
 		}
 	}

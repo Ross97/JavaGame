@@ -14,6 +14,8 @@ public class Player extends Creature {
 	
 	//Add instance of inventory
 	private Inventory inventory;
+
+	
 	
 	//Attack setting (to prevent spamming attack)
 	private long lastAttackTimer, attackCooldown = 100, attackTimer = attackCooldown;
@@ -64,8 +66,8 @@ public class Player extends Creature {
 		Rectangle attack_rect = new Rectangle();
 		Rectangle hurt_rect = new Rectangle();
 		
-		int arSize = 20; //how close to attack other entities
-		int hurtSize = 50; //how close to be hurt
+		int arSize = 100; //how close to attack other entities
+		int hurtSize = 70; //how close to be hurt
 		
 		//Setup attack and hurt boxes
 		attack_rect.width = arSize;
@@ -82,10 +84,8 @@ public class Player extends Creature {
 				continue;
 			
 			//Enemy is within our hurtbox, lose health
-			if(e.getCollisionBounds(0, 0).intersects(hurt_rect) && e.isEnemy()) {
-				System.out.println("Health: " + health);
+			if(e.getCollisionBounds(0, 0).intersects(hurt_rect) && e.isEnemy())
 				this.hurt(1);
-			}
 		}
 		
 		//Check attack keys (arrow keys) with correct attack box
@@ -131,6 +131,7 @@ public class Player extends Creature {
 		System.out.println("You died!");
 	}
 	
+	
 	//Move according to input (WASD)
 	private void getInput() {
 		xMove = 0;
@@ -146,17 +147,27 @@ public class Player extends Creature {
 			xMove = speed;
 	}
 
-	//Draw the player and inventory (depending on state)
+	//Draw the player (depending on player mood)
 	public void render(Graphics g) {
 		if(playerAngry)
 			g.drawImage(Assets.playerAngry, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null); //x and y from Entity class
 		else
 			g.drawImage(Assets.player, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), width, height, null); //x and y from Entity class
+		
+		//Attack images
+		if(handler.getKeyManager().aUp)
+			g.drawImage(Assets.attack, (int)(x - handler.getCamera().getxOffset()) + bounds.x-3, (int)(y - handler.getCamera().getyOffset()), (int)DEFAULT_CREATURE_WIDTH/2, (int)DEFAULT_CREATURE_HEIGHT/2, null);
+		if(handler.getKeyManager().aDown)
+				g.drawImage(Assets.attack, (int)(x - handler.getCamera().getxOffset()) + bounds.x-3, (int)(y - handler.getCamera().getyOffset())+bounds.y, (int)DEFAULT_CREATURE_WIDTH/2, (int)DEFAULT_CREATURE_HEIGHT/2, null);
+		if(handler.getKeyManager().aRight)
+			g.drawImage(Assets.attack, (int)(x - handler.getCamera().getxOffset() + 40), (int)(y - handler.getCamera().getyOffset())+bounds.y/2 + 5, (int)DEFAULT_CREATURE_WIDTH/2, (int)DEFAULT_CREATURE_HEIGHT/2, null);
+		if(handler.getKeyManager().aLeft)
+			g.drawImage(Assets.attack, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset())+bounds.y/2 + 5, (int)DEFAULT_CREATURE_WIDTH/2, (int)DEFAULT_CREATURE_HEIGHT/2, null);
 	}
 	
+	//Render on top of game
 	public void renderLast(Graphics g) {
 		inventory.render(g);
-		Text.drawString(g, "Health: " + Integer.toString(health), handler.getWidth() - 200, 50, Color.WHITE, Assets.font_size28);
 	}
 
 

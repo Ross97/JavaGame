@@ -44,7 +44,7 @@ public class Enemy extends Creature {
 		else
 			nearby = false;
 		
-		//Movement for enemy
+		//Movement for enemydddddddd
 		move(); //from Creature
 		
 		//If can see player, and player is alive, follow it
@@ -76,12 +76,11 @@ public class Enemy extends Creature {
 		if(isAngry)
 			g.drawImage(Assets.enemyAngry, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), (int)DEFAULT_CREATURE_WIDTH, (int)DEFAULT_CREATURE_HEIGHT, null); 
 		else
-			g.drawImage(Assets.enemy, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), (int)DEFAULT_CREATURE_WIDTH, (int)DEFAULT_CREATURE_HEIGHT, null);		
+			g.drawImage(Assets.enemy, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), (int)DEFAULT_CREATURE_WIDTH, (int)DEFAULT_CREATURE_HEIGHT, null);			
 	}
 
 	//If Enemy dies, add the itemDrop
 	public void die() {
-		System.out.println("Enemy killed!");
 		handler.getWorld().getItemManager().addItem(Item.enemyItem.createNew((int)x+50,(int)y));
 	}
 	

@@ -8,7 +8,7 @@ public class Assets {
 	
 	
 	//create bufferedImages for each asset
-	public static BufferedImage player, playerAngry, 
+	public static BufferedImage player, playerAngry, attack, 
 								enemy, enemyAngry, gold,
 								dirt, grass, stone, tree, button, grassPlant, bush, bushBerry;
 	
@@ -17,12 +17,14 @@ public class Assets {
 	
 	//Font
 	public static Font font_size28;
+	public static Font font_size48;
 	
 	
 	public static void init() {
 		
 		//Load the font
 		font_size28 = FontLoader.loadFont("res/fonts/slkscr.ttf", 28);
+		font_size48 = FontLoader.loadFont("res/fonts/slkscr.ttf", 48);
 		
 		//Load the spritesheet
 		SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
@@ -30,6 +32,7 @@ public class Assets {
 		//Player
 		player = sheet.crop(0, 0, w, h);
 		playerAngry = sheet.crop(w*2, h, w, h);
+		attack = sheet.crop(w, h*3, w, h);
 		
 		//Enemy
 		enemy = sheet.crop(2*w, h*2, w, h);
