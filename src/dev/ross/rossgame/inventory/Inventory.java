@@ -38,11 +38,20 @@ public class Inventory {
 		
 		int linespace = 30;
 		int tabwidth = 100;
-					
-		Text.drawString(g, "Inventory:", 5, handler.getHeight()-70, Color.WHITE, Assets.font_size28);
+		int x = 5;
+		int y = handler.getHeight()-70;
+		
+		//Draw border and background
+		g.setColor(Color.black);
+		g.fillRect(0, y-40, 200, 110);
+		g.setColor(Color.blue);
+		g.fillRect(0, y-30, 190, 100);
+				
+		//Display inventory text
+		Text.drawString(g, "Inventory:", x, y, Color.WHITE, Assets.font_size28);
 		for(Item i : inventoryItems) {
-			Text.drawString(g, i.getName(), 5, handler.getHeight()-70 + linespace, Color.WHITE, Assets.font_size28);
-			Text.drawString(g, Integer.toString(i.getCount()), 5 + tabwidth, handler.getHeight()-70 + linespace, Color.WHITE, Assets.font_size28);
+			Text.drawString(g, i.getName(), x, y + linespace, Color.YELLOW, Assets.font_size28);
+			Text.drawString(g, Integer.toString(i.getCount()), x + tabwidth, y + linespace, Color.GRAY, Assets.font_size28);
 			linespace = linespace + linespace;
 		}
 	}
