@@ -15,8 +15,6 @@ public class Player extends Creature {
 	//Add instance of inventory
 	private Inventory inventory;
 
-	
-	
 	//Attack setting (to prevent spamming attack)
 	private long lastAttackTimer, attackCooldown = 100, attackTimer = attackCooldown;
 	private boolean playerAngry = false;
@@ -33,6 +31,7 @@ public class Player extends Creature {
 		bounds.y = 30;
 		bounds.width = 32;
 		bounds.height = 32;
+		
 	}
 
 	//Update the player and inventory by getting input
@@ -129,6 +128,7 @@ public class Player extends Creature {
 	//Game over
 	public void die() {
 		System.out.println("You died!");
+		health = 0;
 	}
 	
 	

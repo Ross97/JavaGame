@@ -4,7 +4,7 @@ import dev.ross.rossgame.gfx.Assets;
 public class BushBerryTile extends Tile {
 
 	public BushBerryTile(int id) {
-		super(Assets.bush, id);
+		super(Assets.bushBerry, id);
 	}
 	
 	public boolean isSolid() {

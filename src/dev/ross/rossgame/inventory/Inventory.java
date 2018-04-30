@@ -51,7 +51,7 @@ public class Inventory {
 		Text.drawString(g, "Inventory:", x, y, Color.WHITE, Assets.font_size28);
 		for(Item i : inventoryItems) {
 			Text.drawString(g, i.getName(), x, y + linespace, Color.YELLOW, Assets.font_size28);
-			Text.drawString(g, Integer.toString(i.getCount()), x + tabwidth, y + linespace, Color.GRAY, Assets.font_size28);
+			Text.drawString(g, Integer.toString(i.getCount()), x + tabwidth, y + linespace, Color.ORANGE, Assets.font_size28);
 			linespace = linespace + linespace;
 		}
 	}

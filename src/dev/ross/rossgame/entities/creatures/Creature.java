@@ -69,8 +69,14 @@ public abstract class Creature extends Entity {
 		//Out of map
 		if(x < -bounds.width)
 			x = -bounds.width;
+		if(x > Tile.TILEWIDTH*20 - bounds.x*2)
+			x = Tile.TILEWIDTH*20 - bounds.x*2;
 		if(y < -bounds.height)
 			y = -bounds.height;
+		if(y > Tile.TILEHEIGHT*20 - bounds.y*2)
+			y = Tile.TILEHEIGHT*20 - bounds.y*2;
+		
+
 		
 	}
 	

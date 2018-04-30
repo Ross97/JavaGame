@@ -7,6 +7,7 @@ import dev.ross.rossgame.entities.EntityManager;
 import dev.ross.rossgame.entities.Tree;
 import dev.ross.rossgame.entities.creatures.Enemy;
 import dev.ross.rossgame.entities.creatures.Player;
+import dev.ross.rossgame.items.Item;
 import dev.ross.rossgame.items.ItemManager;
 import dev.ross.rossgame.tiles.Tile;
 import dev.ross.rossgame.utils.Utils;
@@ -37,13 +38,20 @@ public class World {
 		//If in world1.txt (main level)
 		if(path=="res/worlds/world1.txt") {
 			
-			//Add trees
-			for(int i=0; i < 5; i ++)
-			 	entityManager.addEntity(new Tree(handler, i*300, i*100));
+			//Add single trees
+			for(int i=1; i<3; i++)
+			 	entityManager.addEntity(new Tree(handler, i*3*Tile.TILEHEIGHT, i*3*Tile.TILEHEIGHT));
+			
+			entityManager.addEntity(new Tree(handler, 0, 7*Tile.TILEHEIGHT));
+			
+			//Add Forest
+			for(int i=0; i<3; i++)
+				for(int j=0; j<3; j++)
+					entityManager.addEntity(new Tree(handler, i*Tile.TILEHEIGHT + Tile.TILEHEIGHT*8, j*Tile.TILEHEIGHT + Tile.TILEHEIGHT*7));
 			
 			//Add enemies
-			entityManager.addEntity(new Enemy(handler, 300, 300, 100, 100));
-			entityManager.addEntity(new Enemy(handler, 500, 500, 100, 100));
+			for(int i=0; i<3; i++)
+				entityManager.addEntity(new Enemy(handler, 300, 300 + (i*100), 100, 100));
 		}
 			
 	}

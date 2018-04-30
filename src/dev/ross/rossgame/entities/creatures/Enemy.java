@@ -39,7 +39,7 @@ public class Enemy extends Creature {
 		distance = (float) Math.sqrt((x-playerX)*(x-playerX) + (y-playerY)*(y-playerY));
 		
 		//Check if can nearby player
-		if(distance < 200)
+		if(distance < 250)
 			nearby = true;
 		else
 			nearby = false;

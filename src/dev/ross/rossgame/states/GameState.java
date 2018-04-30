@@ -32,8 +32,10 @@ public class GameState extends State {
 	public void render(Graphics g) {
 		world.render(g);
 		
-		//Draw player HUD
-		Text.drawString(g, "Health: " + Integer.toString(handler.getWorld().getEntityManager().getPlayer().getHealth()), handler.getWidth() - 200, 50, Color.WHITE, Assets.font_size28);
+		//Draw player Health HUD
+		g.setColor(Color.black);
+		g.fillRect(handler.getWidth()-190, 0, 200, 30);
+		Text.drawString(g, "Health: " + Integer.toString(handler.getWorld().getEntityManager().getPlayer().getHealth()), handler.getWidth() - 190, 25, Color.BLUE, Assets.font_size28);
 	}
 
 }
