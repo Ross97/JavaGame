@@ -88,14 +88,10 @@ public class World {
 		int yStart = (int) Math.max(0, handler.getCamera().getyOffset() / Tile.TILEHEIGHT); 	
 		int yEnd = (int) Math.min(width, (handler.getCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
 		
-		for(int y = yStart; y < yEnd; y++) {
-			for(int x = xStart; x < xEnd; x++){
-				getTile(x,y).render(g, 
-						(int) (x*Tile.TILEWIDTH - handler.getCamera().getxOffset()), 
-						(int) (y*Tile.TILEHEIGHT - handler.getCamera().getyOffset()) );
-			}
-			
-		} 
+		for(int y = yStart; y < yEnd; y++) 
+			for(int x = xStart; x < xEnd; x++)
+				getTile(x,y).render(g, (int) (x*Tile.TILEWIDTH - handler.getCamera().getxOffset()), (int) (y*Tile.TILEHEIGHT - handler.getCamera().getyOffset()) );
+		
 		//Render entities and items
 		itemManager.render(g);
 		entityManager.render(g);
@@ -104,7 +100,7 @@ public class World {
 	
 	public Tile getTile(int x, int y) {
 		
-		//Prevent bugs if player leaves map
+		//Default tile - prevent bugs if player leaves map
 		if(x < 0 || y < 0 || x >= width || y >= height)
 			return Tile.grassTile;
 		

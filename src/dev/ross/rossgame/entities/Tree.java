@@ -7,7 +7,7 @@ import dev.ross.rossgame.gfx.Assets;
 import dev.ross.rossgame.items.Item;
 import dev.ross.rossgame.tiles.Tile;
 
-public class Tree extends StaticEntity{
+public class Tree extends StaticEntity {
 
 	public Tree(Handler handler, float x, float y){
 		super(handler, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT*2);

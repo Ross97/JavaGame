@@ -14,7 +14,7 @@ public class Item {
 	public static Item treeItem = new Item(Assets.tree, "Wood", 0);
 	public static Item enemyItem = new Item(Assets.gold, "Gold", 1);
 	
-	//Class
+	//Item variables/stats
 	public static int ITEMWIDTH = 32, ITEMHEIGHT = 32; //Size of item drop
 	protected Handler handler;
 	protected BufferedImage texture;
@@ -36,6 +36,7 @@ public class Item {
 		items[id] = this;
 	}
 	
+	//If the player collides with the item, pick it up 
 	public void tick(){
 		if(handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0f, 0f).intersects(bounds)){
 			pickedUp = true;

@@ -16,6 +16,7 @@ public class Inventory {
 	private Handler handler;
 	private boolean active = false;
 	private ArrayList<Item> inventoryItems;
+	private boolean goldFound = false;
 	
 	//Constructor creates a new arrayList of type Item
 	public Inventory(Handler handler){
@@ -23,12 +24,18 @@ public class Inventory {
 		inventoryItems = new ArrayList<Item>();
 	}
 	
-	//Open/close the inventory 
+	//Open & close the inventory using F
 	public void tick(){
 		if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_F))
 			active = !active;
 		if(!active)
 			return;
+		
+		//Check for desired gold level
+		for(Item i : inventoryItems) {
+			if(i.getName() == "Gold" && i.getCount() >= 15)
+				goldFound = true;
+		}
 	}
 	
 	//Render the inventory to the player's screen
@@ -36,6 +43,7 @@ public class Inventory {
 		if(!active)
 			return;
 		
+		//For drawing the inventory in bottom left
 		int linespace = 30;
 		int tabwidth = 100;
 		int x = 5;
@@ -54,18 +62,28 @@ public class Inventory {
 			Text.drawString(g, Integer.toString(i.getCount()), x + tabwidth, y + linespace, Color.ORANGE, Assets.font_size28);
 			linespace = linespace + linespace;
 		}
+		
+		//If desired gold has been found
+		if(goldFound) {
+			g.setColor(Color.black);
+			g.fillRect(handler.getWidth()/2-130,  handler.getHeight()-50, 295, handler.getHeight()-50);
+
+			Text.drawString(g, ">15+ gold found<", handler.getWidth()/2-130, handler.getHeight()-30, Color.WHITE, Assets.font_size28);
+			Text.drawString(g, " Level Complete!", handler.getWidth()/2-130, handler.getHeight()-1, Color.WHITE, Assets.font_size28);
+		}
 	}
 	
 	//Allows adding items by iterating over inventory items and adding to count
 	public void addItem(Item item){
 		//Go through each item
 		for(Item i : inventoryItems){
-			//Add if correct
+			//Add to count if already exists 
 			if(i.getId() == item.getId()){
 				i.setCount(i.getCount() + item.getCount());
 				return;
 			}
 		}
+		//New item, add it
 		inventoryItems.add(item);
 	}
 

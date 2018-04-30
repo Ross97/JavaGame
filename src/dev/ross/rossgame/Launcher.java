@@ -9,7 +9,7 @@ public class Launcher {
 	public static void main(String[] args) throws MalformedURLException{
 		
 		//In game music
-		URL url = new URL("https://raw.githubusercontent.com/Ross97/JavaGame/master/res/music/music.wav"); //"http://www.edu4java.com/sound/back.wav"
+		URL url = new URL("https://raw.githubusercontent.com/Ross97/JavaGame/master/res/music/music.wav"); // "/res/music/music.wav"
 		AudioClip clip = Applet.newAudioClip(url);
 		clip.play();
 		
