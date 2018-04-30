@@ -20,8 +20,8 @@ public class GameState extends State {
 		world = new World(handler, "res/worlds/world1.txt");
 		handler.setWorld(world);
 	}
-	
-	//If right click, show menu
+
+	//If right click, set menu
 	public void tick() {
 		world.tick();
 		if(handler.getMouseManager().isRightPressed())			

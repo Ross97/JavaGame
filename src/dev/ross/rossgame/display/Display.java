@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 
 public class Display {
 	
-	//Setup Jframe and Canvas
+	//Setup JFrame and Canvas
 	private JFrame frame;
 	private Canvas canvas;
 	
@@ -21,6 +21,7 @@ public class Display {
 		this.width = width;
 		this.height = width;
 		
+		//Create the display
 		createDisplay();
 	}
 	
@@ -34,7 +35,7 @@ public class Display {
 		frame.setLocationRelativeTo(null); //center of screen instead of side
 		frame.setVisible(true); //show the game
 		
-		//create the canvas (locked dimensions)
+		//create the canvas (with locked dimensions)
 		canvas = new Canvas();
 		canvas.setPreferredSize(new Dimension(width, height));
 		canvas.setMaximumSize(new Dimension(width, height));

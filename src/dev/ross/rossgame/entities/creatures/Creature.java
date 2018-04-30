@@ -5,15 +5,13 @@ import dev.ross.rossgame.entities.Entity;
 import dev.ross.rossgame.tiles.Tile;
 
 public abstract class Creature extends Entity {
-	
-	public static final float DEFAULT_SPEED = 3;
 	public static final int DEFAULT_CREATURE_WIDTH = 64, DEFAULT_CREATURE_HEIGHT = 64;
+	public static final float DEFAULT_SPEED = 3;
 	
 	protected float speed;
 	protected float xMove, yMove;
 	
 	public Creature(Handler handler, float x, float y, int width, int height) {
-		
 		super(handler, x, y, width, height);  //super passes up to Entity class
 		
 		speed = DEFAULT_SPEED;

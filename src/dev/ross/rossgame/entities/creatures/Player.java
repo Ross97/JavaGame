@@ -1,13 +1,11 @@
 package dev.ross.rossgame.entities.creatures;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import dev.ross.rossgame.Handler;
 import dev.ross.rossgame.entities.Entity;
 import dev.ross.rossgame.gfx.Assets;
-import dev.ross.rossgame.gfx.Text;
 import dev.ross.rossgame.inventory.Inventory;
 
 public class Player extends Creature {
@@ -22,16 +20,16 @@ public class Player extends Creature {
 	public Player(Handler handler, float x, float y) {
 		super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT); 
 		
-		//Set higher tahn default health, and add inventory
+		//Set stats, and add inventory
 		health = 100;
+		speed = 4;
 		inventory = new Inventory(handler);
 		
 		//Bounds for collision
 		bounds.x = 20;
 		bounds.y = 30;
 		bounds.width = 32;
-		bounds.height = 32;
-		
+		bounds.height = 32;	
 	}
 
 	//Update the player and inventory by getting input
@@ -169,7 +167,6 @@ public class Player extends Creature {
 	public void renderLast(Graphics g) {
 		inventory.render(g);
 	}
-
 
 	public Inventory getInventory() {
 		return inventory;

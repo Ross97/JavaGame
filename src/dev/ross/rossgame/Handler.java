@@ -18,7 +18,6 @@ public class Handler {
 		return game.getCamera();
 	}
 	
-	
 	public KeyManager getKeyManager() {
 		return game.getKeyManager();
 	}
@@ -51,7 +50,5 @@ public class Handler {
 	public void setWorld(World world) {
 		this.world = world;
 	}
-
-
 
 }

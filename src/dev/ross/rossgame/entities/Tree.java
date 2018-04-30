@@ -12,6 +12,8 @@ public class Tree extends StaticEntity{
 	public Tree(Handler handler, float x, float y){
 		super(handler, x, y, Tile.TILEWIDTH, Tile.TILEHEIGHT*2);
 		
+		health = 7;
+		
 		//Set tree boundaries
 		bounds.x = 10;
 		bounds.y = (int) (height / 1.5f);

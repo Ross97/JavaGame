@@ -32,17 +32,17 @@ public class World {
 		
 		loadWorld(path);
 		
-		entityManager.getPlayer().setX(spawnX);
-		entityManager.getPlayer().setY(spawnY);
-		
-		//If in world1.txt (main level)
-		if(path=="res/worlds/world1.txt") {
+		//If in main level, load entities
+		if(path == "res/worlds/world1.txt"){
 			
 			//Add single trees
 			for(int i=1; i<3; i++)
 			 	entityManager.addEntity(new Tree(handler, i*3*Tile.TILEHEIGHT, i*3*Tile.TILEHEIGHT));
-			
 			entityManager.addEntity(new Tree(handler, 0, 7*Tile.TILEHEIGHT));
+			entityManager.addEntity(new Tree(handler, 15*Tile.TILEHEIGHT, 9*Tile.TILEHEIGHT));
+			entityManager.addEntity(new Tree(handler, 12*Tile.TILEHEIGHT, 15*Tile.TILEHEIGHT));
+			entityManager.addEntity(new Tree(handler, 11*Tile.TILEHEIGHT, 13*Tile.TILEHEIGHT));
+
 			
 			//Add Forest
 			for(int i=0; i<3; i++)
@@ -52,7 +52,24 @@ public class World {
 			//Add enemies
 			for(int i=0; i<3; i++)
 				entityManager.addEntity(new Enemy(handler, 300, 300 + (i*100), 100, 100));
+			entityManager.addEntity(new Enemy(handler, Tile.TILEHEIGHT*15, 16*Tile.TILEHEIGHT, 100, 100));
+			entityManager.addEntity(new Enemy(handler, Tile.TILEHEIGHT*13, 15*Tile.TILEHEIGHT, 100, 100));
+			entityManager.addEntity(new Enemy(handler, Tile.TILEHEIGHT*11, 16*Tile.TILEHEIGHT, 100, 100));
+			entityManager.addEntity(new Enemy(handler, Tile.TILEHEIGHT*4, 16*Tile.TILEHEIGHT, 100, 100));
+			entityManager.addEntity(new Enemy(handler, Tile.TILEHEIGHT*8, 17*Tile.TILEHEIGHT, 100, 100));
+			entityManager.addEntity(new Enemy(handler, Tile.TILEHEIGHT*18, 18*Tile.TILEHEIGHT, 100, 100));
+			entityManager.addEntity(new Enemy(handler, Tile.TILEHEIGHT*18, 1*Tile.TILEHEIGHT, 100, 100));
+			entityManager.addEntity(new Enemy(handler, Tile.TILEHEIGHT*16, 3*Tile.TILEHEIGHT, 100, 100));
+			entityManager.addEntity(new Enemy(handler, Tile.TILEHEIGHT*12, 10*Tile.TILEHEIGHT, 100, 100));
+			
+			//Add pickups
+			for(int i=0; i<5; i++)
+				for(int j=0; j<3; j++)
+					itemManager.addItem(Item.enemyItem.createNew(Tile.TILEHEIGHT*11 + Tile.TILEHEIGHT*i, 14*Tile.TILEHEIGHT + Tile.TILEHEIGHT*j));
 		}
+		
+		entityManager.getPlayer().setX(spawnX);
+		entityManager.getPlayer().setY(spawnY);
 			
 	}
 	

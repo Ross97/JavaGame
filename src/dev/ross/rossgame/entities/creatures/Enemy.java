@@ -26,6 +26,9 @@ public class Enemy extends Creature {
 		bounds.y = 30;
 		bounds.width = 32;
 		bounds.height = 32;
+		
+		//Gives enemy a random speed less than 2.8
+		speed = (float) (Math.random() * 2.8 + 1);
 	}
 	
 	//Update the enemy, build simple AI
@@ -44,13 +47,12 @@ public class Enemy extends Creature {
 		else
 			nearby = false;
 		
-		//Movement for enemydddddddd
+		//Movement for enemy
 		move(); //from Creature
 		
-		//If can see player, and player is alive, follow it
+		//If can see alive player, follow it
 		if(nearby && handler.getWorld().getEntityManager().getPlayer().getActive()){ 
 			isAngry = true;
-			speed = 2;
 			
 			if(playerY > y)
 				yMove = +speed;

@@ -42,9 +42,8 @@ public class Game implements Runnable { //Runnable allows threading with run()
 	
 	//Handler
 	private Handler handler;
-
 	
-	//constructor
+	//Setup managers in constructor
 	public Game(String title, int width, int height) {
 		this.width = width;
 		this.height = height;
@@ -54,10 +53,9 @@ public class Game implements Runnable { //Runnable allows threading with run()
 		mouseManager = new MouseManager();
 	}
 	
-	//Setup the display
+	//Setup the game's display and world
 	public void init() {
 		display = new Display(title,width,height);
-		
 		display.getFrame().addKeyListener(keyManager); //get JFrame and add key listener
 		display.getFrame().addMouseListener(mouseManager); //add mouseManager to JFrame
 		display.getFrame().addMouseMotionListener(mouseManager);
@@ -74,7 +72,7 @@ public class Game implements Runnable { //Runnable allows threading with run()
 		gameState = new GameState(handler);
 		menuState = new MenuState(handler);
 		
-		//Set the state
+		//Set the default state
 		State.setState(menuState);
 	}
 
@@ -88,9 +86,9 @@ public class Game implements Runnable { //Runnable allows threading with run()
 	}
 	
 	
-	//Render the game using BufferStrategy
+	//Render the game using BufferStrategy on Canvas
 	private void render() {
-		
+
 		bs = display.getCanvas().getBufferStrategy();
 		
 		//create a bufferStrategy if none exists
@@ -186,7 +184,5 @@ public class Game implements Runnable { //Runnable allows threading with run()
 	public int getHeight() {
 		return height;
 	}
-	
-
 
 }
