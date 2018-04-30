@@ -82,7 +82,7 @@ public class Enemy extends Creature {
 	//If Enemy dies, add the itemDrop
 	public void die() {
 		System.out.println("Enemy killed!");
-		handler.getWorld().getItemManager().addItem(Item.enemyItem.createNew((int)x,(int)y));
+		handler.getWorld().getItemManager().addItem(Item.enemyItem.createNew((int)x+50,(int)y));
 	}
 	
 

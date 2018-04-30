@@ -12,7 +12,7 @@ public class Item {
 	//Handler stuff
 	public static Item[] items = new Item[128];
 	public static Item treeItem = new Item(Assets.tree, "Wood", 0);
-	public static Item enemyItem = new Item(Assets.gold, "EnemyItem", 0);
+	public static Item enemyItem = new Item(Assets.gold, "Gold", 1);
 	
 	//Class
 	public static int ITEMWIDTH = 32, ITEMHEIGHT = 32; //Size of item drop

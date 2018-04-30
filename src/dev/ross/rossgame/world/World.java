@@ -34,7 +34,7 @@ public class World {
 		entityManager.getPlayer().setX(spawnX);
 		entityManager.getPlayer().setY(spawnY);
 		
-		//If in main level
+		//If in world1.txt (main level)
 		if(path=="res/worlds/world1.txt") {
 			
 			//Add trees
@@ -91,10 +91,13 @@ public class World {
 		return t;
 	}
 	
-	
+	//Parse the world file to find what to draw and where to draw it
 	private void loadWorld(String path) {
+		
 		String file = Utils.loadFileAsString(path);
-		String[] tokens = file.split("\\s+");//add each number to string array
+		
+		//Split the file into ints, separated by space-bar
+		String[] tokens = file.split("\\s+");
 		width = Utils.parseInt(tokens[0]); 
 		height = Utils.parseInt(tokens[1]);
 		spawnX = Utils.parseInt(tokens[2]);
@@ -103,12 +106,11 @@ public class World {
 		tiles = new int[width][height];
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {
-				//convert xy into 1D array
-				tiles[x][y] = Utils.parseInt(tokens[(x+y * width + 4)]); 
+				//convert xy into 2D array
+				tiles[x][y] = Utils.parseInt(tokens[(x+y * width + 4)]); //+4 due to w/h/sx/sy above
 			}
 		}
 	}
-	
 	
 	
 	public Handler getHandler() {
