@@ -103,18 +103,19 @@ public class Player extends Creature {
 			attack_rect.y = collision_bounds.y + collision_bounds.height/2 - arSize/2;
 		} 
 		
-		//not attacking
+		//Not attacking
 		else {
 			playerAngry = false;
 			return;
 		}
 		attackTimer = 0;	
 		
-		//attacking
+		//Check all entities
 		for(Entity e : handler.getWorld().getEntityManager().getEntities()){
-			if(e.equals(this)) //itself
+			if(e.equals(this)) //don't check ourself
 				continue;
 			
+			//If entity in attack box, hurt it
 			if(e.getCollisionBounds(0, 0).intersects(attack_rect)) {
 				e.hurt(1);
 				playerAngry = true;

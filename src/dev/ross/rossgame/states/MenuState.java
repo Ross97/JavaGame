@@ -27,6 +27,8 @@ public class MenuState extends State {
 	//Render the world
 	public void render(Graphics g) {
 		menu.render(g);
+		
+		//Show the menu text
 		Text.drawString(g, "FINDER!" , handler.getWidth()/2 - 110, 125, Color.WHITE, Assets.font_size48);
 		Text.drawString(g, "Go find gold!" , handler.getWidth()/2 - 115, 650, Color.YELLOW, Assets.font_size28);
 	}

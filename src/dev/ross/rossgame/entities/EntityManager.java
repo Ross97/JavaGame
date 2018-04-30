@@ -15,13 +15,12 @@ public class EntityManager {
 	//arrayList for adding or removing entities
 	private ArrayList<Entity> entities; 
 	
-	//Constructor that will create the arrayList and add the player
+	//Constructor that will create the entities arrayList and add the player
 	public EntityManager(Handler handler, Player player) {
 		this.handler = handler;
 		this.player = player;
 
 		entities = new ArrayList<Entity>();
-
 		addEntity(player);
 	}
 	
@@ -57,7 +56,7 @@ public class EntityManager {
 	//Comparator class to see what to render first
 	private Comparator<Entity> renderSorter = new Comparator<Entity>() {
 
-		//compares two entities to decide which to render first
+		//compares two entities position to decide which to render first
 		public int compare(Entity a, Entity b) {
 			if(a.getY() + a.getHeight() < b.getY() + b.getHeight())
 				return -1; 

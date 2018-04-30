@@ -16,9 +16,9 @@ public class Tree extends StaticEntity {
 		
 		//Set tree boundaries
 		bounds.x = 10;
-		bounds.y = (int) (height / 1.5f);
+		bounds.y = (int) (height / 1.5);
 		bounds.width = width - 20;
-		bounds.height = (int) (height - height / 1.5f);
+		bounds.height = (int) (height - height / 1.5);
 	}
 
 	public void tick() {}

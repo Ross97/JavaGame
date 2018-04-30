@@ -6,15 +6,12 @@ import dev.ross.rossgame.tiles.Tile;
 
 public abstract class Creature extends Entity {
 	public static final int DEFAULT_CREATURE_WIDTH = 64, DEFAULT_CREATURE_HEIGHT = 64;
-	public static final float DEFAULT_SPEED = 3;
 	
 	protected float speed;
 	protected float xMove, yMove;
 	
 	public Creature(Handler handler, float x, float y, int width, int height) {
 		super(handler, x, y, width, height);  //super passes up to Entity class
-		
-		speed = DEFAULT_SPEED;
 		xMove = 0;
 		yMove = 0;
 	}
@@ -22,12 +19,21 @@ public abstract class Creature extends Entity {
 	
 	//Moves the creature, after checking where it will be moving for collisions (places bounds there)
 	public void move() {
-		
 		if(!checkEntityCollisions(xMove, 0))
 			moveX();
 		
 		if(!checkEntityCollisions(0, yMove))
 			moveY();
+		
+		//Prevent entity getting out of map
+		if(x < -bounds.width)
+			x = -bounds.width;
+		if(x > Tile.TILEWIDTH*20 - bounds.x*2)
+			x = Tile.TILEWIDTH*20 - bounds.x*2;
+		if(y < -bounds.height)
+			y = -bounds.height;
+		if(y > Tile.TILEHEIGHT*20 - bounds.y*2)
+			y = Tile.TILEHEIGHT*20 - bounds.y*2;
 	}
 	
 	//Checks if the collision entity is solid
@@ -37,7 +43,6 @@ public abstract class Creature extends Entity {
 	
 	//Check bounding box for collision
 	public void moveX() {
-		
 		//Creature moving right
 		if(xMove > 0) { 
 			int tempX = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILEWIDTH;
@@ -63,19 +68,6 @@ public abstract class Creature extends Entity {
 				x = tempX * Tile.TILEWIDTH + Tile.TILEWIDTH - bounds.x ; //get pixel co-ords 
 			}
 		}
-		
-		//Out of map
-		if(x < -bounds.width)
-			x = -bounds.width;
-		if(x > Tile.TILEWIDTH*20 - bounds.x*2)
-			x = Tile.TILEWIDTH*20 - bounds.x*2;
-		if(y < -bounds.height)
-			y = -bounds.height;
-		if(y > Tile.TILEHEIGHT*20 - bounds.y*2)
-			y = Tile.TILEHEIGHT*20 - bounds.y*2;
-		
-
-		
 	}
 	
 	//Check bounding box for collision

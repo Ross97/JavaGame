@@ -46,13 +46,13 @@ public abstract class Entity {
 		}
 	}
 	
-	//Set the collision bounds using the defined bounds x and y alongside the width and height
+	//Set the collision bounds rectangle using the defined bounds x and y alongside the width and height
 	public Rectangle getCollisionBounds(float xOffset, float yOffset) {
 		return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
 	}
 	
 
-	//Check the entity for collisions
+	//Check the entity for collisions, returns T or F
 	public boolean checkEntityCollisions(float xOffset, float yOffset) {
 		
 		//Loop through each entity and check if it collides with another entity (not itself)

@@ -82,12 +82,13 @@ public class World {
 	//Render each tile, entity, and item that is on screen
 	public void render(Graphics g) {
 		
-		//What tiles user can see (and thus should render)
+		//What tiles user camera see (and thus should render)
 		int xStart = (int) Math.max(0, handler.getCamera().getxOffset() / Tile.TILEWIDTH); 	
 		int xEnd = (int) Math.min(width, (handler.getCamera().getxOffset() + handler.getWidth()) / Tile.TILEWIDTH + 1);
 		int yStart = (int) Math.max(0, handler.getCamera().getyOffset() / Tile.TILEHEIGHT); 	
 		int yEnd = (int) Math.min(width, (handler.getCamera().getyOffset() + handler.getHeight()) / Tile.TILEHEIGHT + 1);
 		
+		//Render the visible tiles
 		for(int y = yStart; y < yEnd; y++) 
 			for(int x = xStart; x < xEnd; x++)
 				getTile(x,y).render(g, (int) (x*Tile.TILEWIDTH - handler.getCamera().getxOffset()), (int) (y*Tile.TILEHEIGHT - handler.getCamera().getyOffset()) );
@@ -97,7 +98,7 @@ public class World {
 		entityManager.render(g);
 	}
 	
-	
+	//function to get the current tile at XY
 	public Tile getTile(int x, int y) {
 		
 		//Default tile - prevent bugs if player leaves map
@@ -117,18 +118,18 @@ public class World {
 		
 		String file = Utils.loadFileAsString(path);
 		
-		//Split the file into ints, separated by space-bar
-		String[] tokens = file.split("\\s+");
-		width = Utils.parseInt(tokens[0]); 
-		height = Utils.parseInt(tokens[1]);
-		spawnX = Utils.parseInt(tokens[2]);
-		spawnY = Utils.parseInt(tokens[3]);
+		//Split the file into integers, separated by space-bar
+		String[] info = file.split("\\s+");
+		width = Utils.parseInt(info[0]); 
+		height = Utils.parseInt(info[1]);
+		spawnX = Utils.parseInt(info[2]);
+		spawnY = Utils.parseInt(info[3]);
 		
+		//Go through the file to determine which tiles to add to which xy
 		tiles = new int[width][height];
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {
-				//convert xy into 2D array
-				tiles[x][y] = Utils.parseInt(tokens[(x+y * width + 4)]); //+4 due to w/h/sx/sy above
+				tiles[x][y] = Utils.parseInt(info[(x+y * width + 4)]); //+4 due to variables above
 			}
 		}
 	}

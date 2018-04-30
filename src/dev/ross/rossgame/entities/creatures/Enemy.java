@@ -73,7 +73,7 @@ public class Enemy extends Creature {
 	}
 	
 	
-	//Draw the enemy
+	//Draw the enemy (depends on state)
 	public void render(Graphics g) {
 		if(isAngry)
 			g.drawImage(Assets.enemyAngry, (int)(x - handler.getCamera().getxOffset()), (int)(y - handler.getCamera().getyOffset()), (int)DEFAULT_CREATURE_WIDTH, (int)DEFAULT_CREATURE_HEIGHT, null); 
